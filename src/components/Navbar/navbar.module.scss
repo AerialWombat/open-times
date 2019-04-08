@@ -1,0 +1,14 @@
+@import "../../App.scss";
+
+.container {
+  border-bottom: 1px solid $accent-color;
+  .navList {
+    display: flex;
+    list-style: none;
+  }
+
+  .active {
+    color: $accent-color;
+    text-decoration: underline;
+  }
+}
