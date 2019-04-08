@@ -1,20 +1,20 @@
 import React from "react";
 import { IconContext } from "react-icons";
-import { FaUserPlus } from "react-icons/fa";
+import { FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import styles from "./register.module.scss";
+import styles from "./login.module.scss";
 
-const Register = () => {
+const Login = () => {
   return (
     <form className={styles.container}>
       <h1 className={styles.title}>
         <IconContext.Provider
           value={{ color: "black", className: "global-class-name" }}
         >
-          <FaUserPlus />
+          <FaSignInAlt />
         </IconContext.Provider>
-        Register
+        Login
       </h1>
       <p>Errors here</p>
       <div className={styles.inputWrapper}>
@@ -28,16 +28,6 @@ const Register = () => {
         />
       </div>
       <div className={styles.inputWrapper}>
-        <label for="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter username"
-          required
-        />
-      </div>
-      <div className={styles.inputWrapper}>
         <label for="password">Password</label>
         <input
           type="password"
@@ -47,22 +37,12 @@ const Register = () => {
           required
         />
       </div>
-      <div className={styles.inputWrapper}>
-        <label for="password2">Confirm Password</label>
-        <input
-          type="password"
-          name="password2"
-          id="password2"
-          placeholder="Re-type password"
-          required
-        />
-      </div>
-      <button type="submit">Register</button>
+      <button type="submit">Login</button>
       <p className={styles.navigation}>
-        Have an account? <Link to="/user/login">Sign In</Link>
+        Need an account? <Link to="/user/register">Sign Up</Link>
       </p>
     </form>
   );
 };
 
-export default Register;
+export default Login;
