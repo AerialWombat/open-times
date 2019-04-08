@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Navbar from "./components/Navbar/navbar";
-import Register from "./components/Register/register";
-import Login from "./components/Login/login";
+import Navbar from "./components/Navbar/Navbar";
+import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
 import { Switch, Route } from "react-router-dom";
 
 import "./App.scss";
