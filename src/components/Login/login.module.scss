@@ -11,8 +11,6 @@
   align-items: center;
   align-content: center;
 
-  font-variant: small-caps;
-
   .title {
     font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
@@ -34,6 +32,8 @@
 
     label {
       margin-bottom: 0.25rem;
+
+      font-weight: bold;
     }
 
     input {
@@ -94,7 +94,8 @@
 
 @media screen and (min-width: 1140px) {
   .container {
-    margin: 5rem 20rem;
+    max-width: 40%;
+    margin: 5rem auto;
 
     .title {
       font-size: 4rem;

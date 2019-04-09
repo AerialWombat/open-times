@@ -10,9 +10,6 @@
   flex-flow: column nowrap;
   align-items: center;
   align-content: center;
-
-  font-variant: small-caps;
-
   .title {
     font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
@@ -26,6 +23,7 @@
 
   .inputWrapper {
     margin-bottom: 0.75rem;
+    max-width: 80%;
 
     display: flex;
     flex-flow: column nowrap;
@@ -34,6 +32,8 @@
 
     label {
       margin-bottom: 0.25rem;
+
+      font-weight: bold;
     }
 
     input {
@@ -44,6 +44,11 @@
       &:focus {
         border: 2px solid #85b7d9;
       }
+    }
+
+    .passRequirements {
+      font-size: 0.75rem;
+      color: #888;
     }
   }
 
@@ -94,7 +99,8 @@
 
 @media screen and (min-width: 1140px) {
   .container {
-    margin: 5rem 20rem;
+    max-width: 40%;
+    margin: 5rem auto;
 
     .title {
       font-size: 4rem;
