@@ -64,7 +64,7 @@ class Login extends Component {
         </div>
         <button type="submit">Login</button>
         <p className={styles.navigation}>
-          Need an account? <Link to="/user/register">Sign Up</Link>
+          Need an account? <Link to="/users/register">Sign Up</Link>
         </p>
       </form>
     );

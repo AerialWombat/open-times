@@ -81,7 +81,13 @@ class Register extends Component {
             placeholder="Enter password"
             required
             onChange={this.onPasswordChange}
+            pattern="(?=.*\d)(?=.*[a-z]).{8,}"
+            title="Must be at least 8 characters including a number and a lowercase letter."
           />
+          <p className={styles.passRequirements}>
+            Password should be at least 8 characters including a number and a
+            lowercase letter.
+          </p>
         </div>
         <div className={styles.inputWrapper}>
           <label for="password2">Confirm Password</label>
@@ -96,7 +102,7 @@ class Register extends Component {
         </div>
         <button type="submit">Register</button>
         <p className={styles.navigation}>
-          Have an account? <Link to="/user/login">Sign In</Link>
+          Have an account? <Link to="/users/login">Sign In</Link>
         </p>
       </form>
     );
