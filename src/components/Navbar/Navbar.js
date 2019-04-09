@@ -9,12 +9,12 @@ const Navbar = () => {
       <a>Logo</a>
       <ul className={styles.navList}>
         <li>
-          <NavLink to="/user/login" activeClassName={styles.active}>
+          <NavLink to="/users/login" activeClassName={styles.active}>
             Log In
           </NavLink>
         </li>
         <li>
-          <NavLink to="/user/register" activeClassName={styles.active}>
+          <NavLink to="/users/register" activeClassName={styles.active}>
             Sign Up
           </NavLink>
         </li>
