@@ -1,0 +1,29 @@
+.containerSuccess {
+  margin: 0.5rem;
+  border: 1px solid #a3c293;
+  border-radius: 5px;
+  padding: 0.5rem;
+  width: 80%;
+
+  background-color: #fcfff5;
+
+  .message {
+    font-size: 0.9rem;
+    color: #2c662d;
+  }
+}
+
+.containerError {
+  margin: 0.5rem;
+  border: 1px solid #e0b4b4;
+  border-radius: 5px;
+  padding: 0.5rem;
+  width: 80%;
+
+  background-color: #fff6f6;
+
+  .message {
+    font-size: 0.9rem;
+    color: #9f3a38;
+  }
+}
