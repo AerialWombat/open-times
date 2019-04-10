@@ -30,8 +30,8 @@ class Login extends Component {
   };
 
   getAlertList = alerts => {
-    if (!alerts) {
-      return "";
+    if (alerts.length <= 0 || !alerts[0]) {
+      return;
     }
     return alerts.map((alert, index) => {
       return (
@@ -51,7 +51,7 @@ class Login extends Component {
           </IconContext.Provider>
           Login
         </h1>
-        {this.getAlertList([...this.state.alerts, this.props.location.state])}
+        {this.getAlertList([this.props.location.state, ...this.state.alerts])}
         <div className={styles.inputWrapper}>
           <label for="email">Email</label>
           <input
