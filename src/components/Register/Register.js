@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Alert from "../Alert/Alert";
 import { IconContext } from "react-icons";
 import { FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -13,7 +14,7 @@ class Register extends Component {
       username: null,
       password: null,
       passwordConfirm: null,
-      messages: []
+      errors: []
     };
   }
 
@@ -34,8 +35,35 @@ class Register extends Component {
   };
 
   onRegisterSubmit = event => {
-    console.log(this.state);
+    const { email, username, password, passwordConfirm } = this.state;
+    fetch("http://localhost:5000/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        username: username,
+        password: password,
+        passwordConfirm: passwordConfirm
+      })
+    }).then(response => {
+      response.json().then(data => {
+        if (response.status === 400) {
+          this.setState({ ...this.state, errors: data.errors });
+        } else {
+          console.log("SUCCESS 200", data);
+        }
+      });
+    });
     event.preventDefault();
+  };
+
+  getErrorList = errors => {
+    if (!errors) {
+      return "";
+    }
+    return errors.map(error => {
+      return <Alert success={false} message={error} />;
+    });
   };
 
   render() {
@@ -49,7 +77,7 @@ class Register extends Component {
           </IconContext.Provider>
           Register
         </h1>
-        <p>Errors here</p>
+        {this.getErrorList(this.state.errors)}
         <div className={styles.inputWrapper}>
           <label for="email">Email</label>
           <input
