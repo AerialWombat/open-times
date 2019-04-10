@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Alert from "../Alert/Alert";
 import { IconContext } from "react-icons";
 import { FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -11,7 +12,7 @@ class Login extends Component {
     this.state = {
       email: null,
       password: null,
-      messages: []
+      alerts: []
     };
   }
 
@@ -28,6 +29,17 @@ class Login extends Component {
     event.preventDefault();
   };
 
+  getAlertList = alerts => {
+    if (!alerts) {
+      return "";
+    }
+    return alerts.map((alert, index) => {
+      return (
+        <Alert key={index} success={alert.success} message={alert.message} />
+      );
+    });
+  };
+
   render() {
     return (
       <form className={styles.container} onSubmit={this.onLoginSubmit}>
@@ -39,7 +51,7 @@ class Login extends Component {
           </IconContext.Provider>
           Login
         </h1>
-        <p>Errors here</p>
+        {this.getAlertList([...this.state.alerts, this.props.location.state])}
         <div className={styles.inputWrapper}>
           <label for="email">Email</label>
           <input
