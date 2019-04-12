@@ -1,7 +1,7 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import styles from "./navbar.module.scss";
+import styles from './navbar.module.scss';
 
 const Navbar = () => {
   return (
@@ -9,13 +9,18 @@ const Navbar = () => {
       <a>Logo</a>
       <ul className={styles.navList}>
         <li>
-          <NavLink to="/users/login" activeClassName={styles.active}>
+          <NavLink to='/users/login' activeClassName={styles.active}>
             Log In
           </NavLink>
         </li>
         <li>
-          <NavLink to="/users/register" activeClassName={styles.active}>
+          <NavLink to='/users/register' activeClassName={styles.active}>
             Sign Up
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/users/secret' activeClassName={styles.active}>
+            SECRET
           </NavLink>
         </li>
         <li>
