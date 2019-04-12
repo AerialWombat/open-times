@@ -19,25 +19,14 @@ class Register extends Component {
     };
   }
 
-  onEmailChange = event => {
-    this.setState({ ...this.state, email: event.target.value });
-  };
-
-  onUsernameChange = event => {
-    this.setState({ ...this.state, username: event.target.value });
-  };
-
-  onPasswordChange = event => {
-    this.setState({ ...this.state, password: event.target.value });
-  };
-
-  onPasswordConfirmChange = event => {
-    this.setState({ ...this.state, passwordConfirm: event.target.value });
+  onInputChange = event => {
+    const { value, name } = event.target;
+    this.setState({ ...this.state, [name]: value });
   };
 
   onRegisterSubmit = event => {
     const { email, username, password, passwordConfirm } = this.state;
-    fetch("http://localhost:5000/users/register", {
+    fetch("http://localhost:5000/api/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -98,36 +87,36 @@ class Register extends Component {
           </h1>
           {this.getAlertList(this.state.alerts)}
           <div className={styles.inputWrapper}>
-            <label for="email">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
               id="email"
               placeholder="Enter email"
               required
-              onChange={this.onEmailChange}
+              onChange={this.onInputChange}
             />
           </div>
           <div className={styles.inputWrapper}>
-            <label for="username">Username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               name="username"
               id="username"
               placeholder="Enter username"
               required
-              onChange={this.onUsernameChange}
+              onChange={this.onInputChange}
             />
           </div>
           <div className={styles.inputWrapper}>
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
               id="password"
               placeholder="Enter password"
               required
-              onChange={this.onPasswordChange}
+              onChange={this.onInputChange}
               pattern="(?=.*\d)(?=.*[a-z]).{8,}"
               title="Must be at least 8 characters including a number and a lowercase letter."
             />
@@ -137,14 +126,14 @@ class Register extends Component {
             </p>
           </div>
           <div className={styles.inputWrapper}>
-            <label for="password2">Confirm Password</label>
+            <label htmlFor="password2">Confirm Password</label>
             <input
               type="password"
-              name="password2"
-              id="password2"
+              name="passwordConfirm"
+              id="passwordConfirm"
               placeholder="Re-type password"
               required
-              onChange={this.onPasswordConfirmChange}
+              onChange={this.onInputChange}
             />
           </div>
           <button type="submit">Register</button>

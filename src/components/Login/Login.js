@@ -16,16 +16,22 @@ class Login extends Component {
     };
   }
 
-  onEmailChange = event => {
-    this.setState({ ...this.state, email: event.target.value });
-  };
-
-  onPasswordChange = event => {
-    this.setState({ ...this.state, password: event.target.value });
+  onInputChange = event => {
+    const { value, name } = event.target;
+    this.setState({ ...this.state, [name]: value });
   };
 
   onLoginSubmit = event => {
-    console.log(this.state);
+    const { email, password } = this.state;
+    fetch("http://localhost:5000/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    });
+    // .then(response => response.json().then(data => console.log(data)));
     event.preventDefault();
   };
 
@@ -53,31 +59,32 @@ class Login extends Component {
         </h1>
         {this.getAlertList([this.props.location.state, ...this.state.alerts])}
         <div className={styles.inputWrapper}>
-          <label for="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
             id="email"
             placeholder="Enter email"
             required
-            onChange={this.onEmailChange}
+            onChange={this.onInputChange}
           />
         </div>
         <div className={styles.inputWrapper}>
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
             id="password"
             placeholder="Enter password"
             required
-            onChange={this.onPasswordChange}
+            onChange={this.onInputChange}
           />
         </div>
         <button type="submit">Login</button>
         <p className={styles.navigation}>
           Need an account? <Link to="/users/register">Sign Up</Link>
         </p>
+        <button onClick={this.test}>Test</button>
       </form>
     );
   }
