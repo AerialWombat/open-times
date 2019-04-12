@@ -1,21 +1,25 @@
-import React, { Component } from "react";
-import Navbar from "./components/Navbar/Navbar";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-import { Switch, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import Navbar from './components/Navbar/Navbar';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
+import { Switch, Route } from 'react-router-dom';
 
-import "./App.scss";
+import withAuth from './components/withAuth';
+import Secret from './components/Secret';
+
+import './App.scss';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Navbar />
         <main>
           <Switch>
-            <Route exact path="/" />
-            <Route path="/users/register" component={Register} />
-            <Route path="/users/login" component={Login} />
+            <Route exact path='/' />
+            <Route path='/users/register' component={Register} />
+            <Route path='/users/login' component={Login} />
+            <Route path='/users/secret' component={withAuth(Secret)} />
           </Switch>
         </main>
       </div>

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import styles from "./alert.module.scss";
+import styles from './alert.module.scss';
 
 const Alert = ({ success, message }) => {
   return (
