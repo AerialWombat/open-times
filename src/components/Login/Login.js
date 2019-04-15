@@ -34,6 +34,7 @@ class Login extends Component {
       })
     }).then(response => {
       if (response.status === 200) {
+        this.props.updateLoggedIn('in');
         this.props.history.push({
           pathname: '/',
           state: { success: true, message: 'Login successful!' }
@@ -71,7 +72,7 @@ class Login extends Component {
           </IconContext.Provider>
           Login
         </h1>
-        {this.getAlertList([this.props.location.state, ...this.state.alerts])}
+        {this.getAlertList(this.state.alerts)}
         <div className={styles.inputWrapper}>
           <label htmlFor='email'>Email</label>
           <input
@@ -98,7 +99,6 @@ class Login extends Component {
         <p className={styles.navigation}>
           Need an account? <Link to='/users/register'>Sign Up</Link>
         </p>
-        <button onClick={this.test}>Test</button>
       </form>
     );
   }

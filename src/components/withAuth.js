@@ -12,7 +12,7 @@ const withAuth = ProtectedComponent => {
     }
 
     componentDidMount = () => {
-      fetch('http://localhost:5000/api/checkToken', {
+      fetch('http://localhost:5000/api/checkAuth', {
         method: 'GET',
         credentials: 'include'
       })
