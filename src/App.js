@@ -4,7 +4,7 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import { Switch, Route } from 'react-router-dom';
 
-import withAuth from './components/withAuth';
+import ProtectedComponent from './components/ProtectedComponent';
 import Secret from './components/Secret';
 
 import './App.scss';
@@ -17,6 +17,7 @@ class App extends Component {
     };
   }
 
+  // Check if user is already logged in and update state
   componentDidMount = () => {
     fetch('http://localhost:5000/api/checkAuth', {
       method: 'GET',
@@ -33,10 +34,12 @@ class App extends Component {
       .catch(error => console.log(error));
   };
 
+  // Updates isLoggedIn state based on arg
   updateLoggedIn = choice => {
     if (choice.toLowerCase() === 'in') {
       this.setState({ isLoggedIn: true });
     } else if (choice.toLowerCase() === 'out') {
+      // If logging out, calls API's logout route
       this.setState({ isLoggedIn: false });
       fetch('http://localhost:5000/api/users/logout', {
         method: 'GET',
@@ -62,7 +65,10 @@ class App extends Component {
                 <Login {...props} updateLoggedIn={this.updateLoggedIn} />
               )}
             />
-            <Route path='/users/secret' component={withAuth(Secret)} />
+            <Route
+              path='/users/secret'
+              component={ProtectedComponent(Secret)}
+            />
           </Switch>
         </main>
       </div>

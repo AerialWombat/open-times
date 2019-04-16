@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-const withAuth = ProtectedComponent => {
+const ProtectedComponent = ProtectedComponent => {
   return class extends Component {
     constructor() {
       super();
@@ -11,6 +11,7 @@ const withAuth = ProtectedComponent => {
       };
     }
 
+    // On mount, send GET request to check user authentication
     componentDidMount = () => {
       fetch('http://localhost:5000/api/checkAuth', {
         method: 'GET',
@@ -20,6 +21,7 @@ const withAuth = ProtectedComponent => {
           if (response.status === 200) {
             this.setState({ ...this.state, loading: false });
           } else {
+            // On unsuccessful response, throw error and redirect
             const error = new Error(response.error);
             throw error;
           }
@@ -47,4 +49,4 @@ const withAuth = ProtectedComponent => {
   };
 };
 
-export default withAuth;
+export default ProtectedComponent;
