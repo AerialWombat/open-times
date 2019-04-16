@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Alert from '../Alert/Alert';
+import Alert from '../../shared-components/Alert/Alert';
 import { IconContext } from 'react-icons';
 import { FaUserPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -18,11 +18,21 @@ class Register extends Component {
     };
   }
 
+  // On mount, append any alerts from redirect state
+  componentDidMount = () => {
+    this.setState({
+      ...this.state,
+      alerts: this.state.alerts.concat(this.props.location.state)
+    });
+  };
+
+  // Input change handle for form fields
   onInputChange = event => {
     const { value, name } = event.target;
     this.setState({ ...this.state, [name]: value });
   };
 
+  // Submit handle that sends POST request to API's register route
   onRegisterSubmit = event => {
     event.preventDefault();
     const { email, username, password, passwordConfirm } = this.state;
@@ -36,22 +46,29 @@ class Register extends Component {
         passwordConfirm: passwordConfirm
       })
     }).then(response => {
+      // Check for success response
       if (response.status === 200) {
+        // Redirect to login route with success message
         this.props.history.push({
           pathname: '/users/login',
           state: { success: true, message: 'Registration successful!' }
         });
       } else {
-        response.json().then(data => {
-          this.setState({ ...this.state, alerts: data.alerts });
-        });
+        // Append alerts from unsuccessful response
+        response
+          .json()
+          .then(data => {
+            this.setState({ ...this.state, alerts: data.alerts });
+          })
+          .catch(error => console.log(error));
       }
     });
   };
 
+  // Check for alerts and display Alert component for each
   getAlertList = alerts => {
-    if (!alerts) {
-      return '';
+    if (alerts.length <= 0 || !alerts[0]) {
+      return;
     }
     return alerts.map((alert, index) => {
       return (
@@ -60,7 +77,7 @@ class Register extends Component {
     });
   };
 
-  // Check if redirecting, if false, render page normally
+  // Displays list of Alert components if alerts exist in state
   render() {
     return (
       <form className={styles.container} onSubmit={this.onRegisterSubmit}>

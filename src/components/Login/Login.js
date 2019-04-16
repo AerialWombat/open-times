@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Alert from '../Alert/Alert';
+import Alert from '../../shared-components/Alert/Alert';
 import { IconContext } from 'react-icons';
 import { FaSignInAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -15,12 +15,21 @@ class Login extends Component {
       alerts: []
     };
   }
+  // On mount, append any alerts from redirect state
+  componentDidMount = () => {
+    this.setState({
+      ...this.state,
+      alerts: this.state.alerts.concat(this.props.location.state)
+    });
+  };
 
+  // Input change handle for form fields
   onInputChange = event => {
     const { value, name } = event.target;
     this.setState({ ...this.state, [name]: value });
   };
 
+  // Submit handle that sends POST request to API's login route
   onLoginSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
@@ -33,13 +42,17 @@ class Login extends Component {
         password: password
       })
     }).then(response => {
+      // Check for success response
       if (response.status === 200) {
+        // Update loggedIn state to be true
         this.props.updateLoggedIn('in');
+        // Redirect to any route with success message
         this.props.history.push({
           pathname: '/',
           state: { success: true, message: 'Login successful!' }
         });
       } else {
+        // Append alerts from unsuccessful response
         response
           .json()
           .then(data => {
@@ -50,6 +63,7 @@ class Login extends Component {
     });
   };
 
+  // Check for alerts and display Alert component for each
   getAlertList = alerts => {
     if (alerts.length <= 0 || !alerts[0]) {
       return;
@@ -61,6 +75,7 @@ class Login extends Component {
     });
   };
 
+  // Displays list of Alert components if alerts exist in state
   render() {
     return (
       <form className={styles.container} onSubmit={this.onLoginSubmit}>
