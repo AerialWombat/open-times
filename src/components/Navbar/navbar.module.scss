@@ -1,14 +1,53 @@
-@import "../../App.scss";
+@import '../../App.scss';
 
 .container {
-  border-bottom: 1px solid $accent-color;
+  padding: 0.25rem 0.5rem;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: $accent-color;
+
+  .brand {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: bold;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
   .navList {
+    padding: 0.5rem 0.25rem;
     display: flex;
     list-style: none;
+
+    a {
+      margin-left: 0.5rem;
+      border-radius: 5px;
+      padding: 0.25rem 0.5rem;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    button {
+      margin-left: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      padding: 0.25rem 0.5rem;
+      font-family: 'Roboto', Arial, Helvetica, sans-serif; // For some reason, it uses system font unless specified
+      font-size: 1rem;
+      background-color: transparent;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
   }
 
   .active {
-    color: $accent-color;
-    text-decoration: underline;
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
   }
 }

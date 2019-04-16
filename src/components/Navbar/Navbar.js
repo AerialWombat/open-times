@@ -21,27 +21,30 @@ const Navbar = ({ isLoggedIn, updateLoggedIn }) => {
 
   const userNavbar = (
     <React.Fragment>
-      <li>
-        <NavLink>Groups</NavLink>
-      </li>
-      <li>
-        <NavLink>Account</NavLink>
-      </li>
-      <li>
-        <button
-          onClick={() => {
-            updateLoggedIn('out');
-          }}
-        >
-          logout
-        </button>
-      </li>
+      <NavLink to='/groups' activeClassName={styles.active}>
+        Groups
+      </NavLink>
+
+      <NavLink to='/account' activeClassName={styles.active}>
+        Account
+      </NavLink>
+
+      <button
+        onClick={() => {
+          updateLoggedIn('out');
+        }}
+      >
+        Log Out
+      </button>
     </React.Fragment>
   );
 
   return (
     <nav className={styles.container}>
-      <a>Logo</a>
+      <NavLink className={styles.brand} to='/'>
+        Brand
+      </NavLink>
+
       <ul className={styles.navList}>
         {isLoggedIn ? userNavbar : guestNavbar}
       </ul>
