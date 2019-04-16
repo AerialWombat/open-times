@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@import '../../App.scss';
 
 .container {
   margin: 1rem;
@@ -10,8 +10,11 @@
   flex-flow: column nowrap;
   align-items: center;
   align-content: center;
+
   .title {
-    font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
 
     svg {
