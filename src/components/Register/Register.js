@@ -57,9 +57,7 @@ class Register extends Component {
         // Append alerts from unsuccessful response
         response
           .json()
-          .then(data => {
-            this.setState({ ...this.state, alerts: data.alerts });
-          })
+          .then(data => this.setState({ ...this.state, alerts: data.alerts }))
           .catch(error => console.log(error));
       }
     });
