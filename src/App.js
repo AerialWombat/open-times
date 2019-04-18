@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
-import { Switch, Route } from 'react-router-dom';
+import Account from './components/Account/Account';
+import Dashboard from './components/Dashboard/Dashboard';
+import { Switch, Route, withRouter } from 'react-router-dom';
 
-import ProtectedComponent from './components/ProtectedComponent';
+import PrivateRoute from './components/PrivateRoute';
 import Secret from './components/Secret';
 
 import './App.scss';
@@ -26,9 +28,6 @@ class App extends Component {
       .then(response => {
         if (response.status === 200) {
           this.setState({ isLoggedIn: true });
-        } else {
-          const error = new Error(response.error);
-          throw error;
         }
       })
       .catch(error => console.log(error));
@@ -39,12 +38,13 @@ class App extends Component {
     if (choice.toLowerCase() === 'in') {
       this.setState({ isLoggedIn: true });
     } else if (choice.toLowerCase() === 'out') {
-      // If logging out, calls API's logout route
+      // If logging out, calls API's logout route, sets loggedIn to false, and redirects
       this.setState({ isLoggedIn: false });
       fetch('http://localhost:5000/api/users/logout', {
         method: 'GET',
         credentials: 'include'
-      }).then(response => console.log(response));
+      });
+      this.props.history.push('/users/login');
     }
   };
 
@@ -65,9 +65,16 @@ class App extends Component {
                 <Login {...props} updateLoggedIn={this.updateLoggedIn} />
               )}
             />
-            <Route
-              path='/users/secret'
-              component={ProtectedComponent(Secret)}
+            <PrivateRoute
+              path='/account'
+              component={Account}
+              updateLoggedIn={this.updateLoggedIn}
+            />
+            <PrivateRoute path='/groups' component={Dashboard} />
+            <PrivateRoute
+              path='/secret'
+              component={Secret}
+              updateLoggedIn={this.updateLoggedIn}
             />
           </Switch>
         </main>
@@ -76,4 +83,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
