@@ -7,7 +7,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import PrivateRoute from './components/PrivateRoute';
-import Secret from './components/Secret';
 
 import './App.scss';
 
@@ -71,11 +70,6 @@ class App extends Component {
               updateLoggedIn={this.updateLoggedIn}
             />
             <PrivateRoute path='/groups' component={Dashboard} />
-            <PrivateRoute
-              path='/secret'
-              component={Secret}
-              updateLoggedIn={this.updateLoggedIn}
-            />
           </Switch>
         </main>
       </div>
