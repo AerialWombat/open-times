@@ -1,0 +1,75 @@
+@import '../../../App.scss';
+
+.container {
+  border: 1px solid #aaa;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #fff;
+  box-shadow: #aaa 0px 1px 3px;
+
+  .name {
+    font-size: 1.75rem;
+  }
+
+  .subheader {
+    font-size: 1rem;
+    font-weight: normal;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .description {
+    margin: 0.5rem 0;
+    font-size: 0.75rem;
+    color: #333;
+  }
+
+  .members {
+    position: relative;
+
+    .membersToggle {
+      margin: 0.5rem 0;
+      border: none;
+      color: $accent-color;
+
+      cursor: pointer;
+    }
+
+    .showMemberList {
+      display: block;
+      list-style: none;
+      margin: 0.5rem 0;
+
+      li {
+        margin: 0.25rem 0;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid #aaa;
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+    .hideMemberList {
+      display: none;
+      margin: 0.5rem 0;
+    }
+  }
+
+  .navButton {
+    margin-right: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    background-color: $accent-color;
+
+    cursor: pointer;
+    transition: 0.25s all ease;
+
+    &:hover {
+      background-color: #518c00;
+    }
+  }
+}
