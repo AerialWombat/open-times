@@ -2,14 +2,16 @@
 
 .container {
   margin: 1rem;
-  border: solid 2px #aaa;
-  border-radius: 5px;
+  border: solid 1px #aaa;
   padding: 1rem 0.5rem;
 
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   align-content: center;
+
+  background-color: #fff;
+  box-shadow: #aaa 0px 1px 3px;
 
   .title {
     display: flex;
