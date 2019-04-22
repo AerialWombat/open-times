@@ -59,8 +59,10 @@
         border-radius: 5px;
         padding: 0.25rem;
 
+        transition: 0.25s ease all;
+
         &:focus {
-          border: 2px solid #85b7d9;
+          border: 2px solid $accent-color;
         }
       }
     }
