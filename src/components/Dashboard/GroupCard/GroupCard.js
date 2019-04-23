@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './group-card.module.scss';
 
@@ -24,29 +25,36 @@ class GroupCard extends Component {
             Created by: <span>{group.creator}</span>
           </h2>
           <p className={styles.description}>{group.description}</p>
-          <div className={styles.members}>
-            <button
-              className={styles.membersToggle}
-              onClick={this.toggleMemberListVisibility}
-            >
-              Show/Hide members...
-            </button>
-            <ul
-              className={
-                this.state.showMembers
-                  ? styles.showMemberList
-                  : styles.hideMemberList
-              }
-            >
-              {group.members.map(member => {
-                return <li>{member}</li>;
-              })}
-            </ul>
-          </div>
+        </div>
+        <div className={styles.members}>
+          <button
+            className={styles.membersToggle}
+            onClick={this.toggleMemberListVisibility}
+          >
+            Show/Hide members...
+          </button>
+          <ul
+            className={
+              this.state.showMembers
+                ? styles.showMemberList
+                : styles.hideMemberList
+            }
+          >
+            {group.members.map(member => {
+              return <li>{member}</li>;
+            })}
+          </ul>
         </div>
         <div className={styles.actions}>
-          <button className={styles.navButton}>View Schedule</button>
-          <button className={styles.navButton}>Manage</button>
+          <Link to={`/groups/:${group.slug}`} className={styles.navButton}>
+            View
+          </Link>
+          <Link
+            to={`/groups/${group.slug}/manage`}
+            className={styles.navButton}
+          >
+            Manage
+          </Link>
         </div>
       </div>
     );
