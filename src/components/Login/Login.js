@@ -48,7 +48,7 @@ class Login extends Component {
         this.props.updateLoggedIn('in');
         // Redirect to any route with success message
         this.props.history.push({
-          pathname: '/',
+          pathname: '/groups',
           state: { success: true, message: 'Login successful!' }
         });
       } else {
