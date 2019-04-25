@@ -40,8 +40,8 @@ class GroupCard extends Component {
                 : styles.hideMemberList
             }
           >
-            {group.members.map(member => {
-              return <li>{member}</li>;
+            {group.members.map((member, index) => {
+              return <li key={index}>{member}</li>;
             })}
           </ul>
         </div>

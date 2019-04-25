@@ -1,8 +1,170 @@
+@import '../../App.scss';
+
 .container {
+  position: relative;
   padding: 1rem;
 
-  h1 {
-    letter-spacing: 1px;
-    font-family: 'Roboto Condense', Arial, Helvetica, sans-serif;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      letter-spacing: 1px;
+      font-family: 'Roboto Condense', Arial, Helvetica, sans-serif;
+      font-size: 1.75rem;
+    }
+
+    .navButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5rem;
+      width: auto;
+      background-color: $accent-color;
+
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+
+      &:hover {
+        background-color: #518c00;
+      }
+
+      .btnText {
+        display: none;
+      }
+    }
+  }
+
+  .showModalOverlay {
+    position: fixed;
+    top: 0;
+    margin-left: -1rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+
+  .hideModalOverlay {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .creationModal {
+    border: solid 1px #aaa;
+    padding: 1rem 0.5rem;
+    min-width: 275px;
+    width: 40%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    align-content: center;
+
+    background-color: #fff;
+    box-shadow: #222 0px 1px 3px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .inputWrapper {
+      margin-bottom: 0.75rem;
+
+      display: flex;
+      flex-flow: column nowrap;
+
+      min-width: 80%;
+
+      label {
+        margin-bottom: 0.25rem;
+
+        font-weight: bold;
+      }
+
+      input {
+        border: none;
+        border-bottom: 2px solid rgba(34, 36, 38, 0.15);
+        padding: 0.25rem;
+
+        transition: 0.25s ease all;
+
+        &:focus {
+          border-bottom: 2px solid $accent-color;
+        }
+
+        &:required:invalid {
+          outline: none;
+        }
+      }
+    }
+
+    button {
+      margin-bottom: 0.5rem;
+      border: 1px solid $accent-color;
+      border-radius: 5px;
+      padding: 0.4rem;
+      min-width: 80%;
+
+      color: #fff;
+      font-weight: bold;
+
+      background-color: $accent-color;
+
+      cursor: pointer;
+      transition: 0.25s all ease;
+
+      &:hover {
+        background-color: #518c00;
+      }
+
+      &.grey {
+        border: 1px solid #bbb;
+        background-color: #e0e1e2;
+        color: #000;
+
+        &:hover {
+          background-color: #cacbcd;
+        }
+      }
+    }
+  }
+}
+
+/* Media Queries
+======================================*/
+
+@media screen and (min-width: 760px) {
+  .container {
+    padding: 1rem;
+
+    header {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .navButton {
+        padding: 0.5rem 1rem;
+
+        .btnText {
+          display: inline;
+          margin-left: 0.5rem;
+        }
+      }
+    }
   }
 }
