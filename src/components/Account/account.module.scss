@@ -55,14 +55,18 @@
       }
 
       input {
-        border-color: rgba(34, 36, 38, 0.15);
-        border-radius: 5px;
+        border: none;
+        border-bottom: 2px solid rgba(34, 36, 38, 0.15);
         padding: 0.25rem;
 
         transition: 0.25s ease all;
 
         &:focus {
-          border: 2px solid $accent-color;
+          border-bottom: 2px solid $accent-color;
+        }
+
+        &:required:invalid {
+          outline: none;
         }
       }
     }
@@ -90,9 +94,22 @@
       &:hover {
         background-color: #518c00;
       }
+
+      &.grey {
+        border: 1px solid #bbb;
+        background-color: #e0e1e2;
+        color: #000;
+
+        &:hover {
+          background-color: #cacbcd;
+        }
+      }
     }
   }
 }
+
+/* Media Queries
+======================================*/
 
 @media screen and (min-width: 760px) {
   .container {

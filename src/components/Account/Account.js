@@ -135,7 +135,9 @@ class Account extends Component {
               onChange={this.onInputChange}
             />
           </div>
-          <button type='submit'>Change Password</button>
+          <button className={styles.grey} type='submit'>
+            Change Password
+          </button>
         </form>
         <form onSubmit={this.onDeleteAccSubmit}>
           <h2 className={styles.subtitle}>Delete Account</h2>
@@ -150,7 +152,9 @@ class Account extends Component {
               onChange={this.onInputChange}
             />
           </div>
-          <button type='submit'>Delete Account</button>
+          <button className={styles.grey} type='submit'>
+            Delete Account
+          </button>
         </form>
       </div>
     );
