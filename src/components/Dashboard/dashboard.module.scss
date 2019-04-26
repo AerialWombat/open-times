@@ -65,7 +65,7 @@
     border: solid 1px #aaa;
     padding: 1rem 0.5rem;
     min-width: 275px;
-    width: 40%;
+    width: 50%;
 
     display: flex;
     flex-flow: column nowrap;
@@ -96,11 +96,15 @@
         font-weight: bold;
       }
 
-      input {
+      input,
+      textarea {
         border: none;
         border-bottom: 2px solid rgba(34, 36, 38, 0.15);
         padding: 0.25rem;
+        font-family: 'Roboto', Arial, Helvetica, sans-serif;
+        font-size: 0.9rem;
 
+        resize: none;
         transition: 0.25s ease all;
 
         &:focus {
