@@ -39,7 +39,7 @@ class Account extends Component {
   onPassChangeSubmit = event => {
     event.preventDefault();
     const { currentPassword, newPassword, newPasswordConfirm } = this.state;
-    fetch('http://localhost:5000/api/users/changepassword', {
+    fetch('http://localhost:5000/api/users/change-password', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -58,7 +58,7 @@ class Account extends Component {
   onDeleteAccSubmit = event => {
     event.preventDefault();
     const { deletePassword } = this.state;
-    fetch('http://localhost:5000/api/users/deleteaccount', {
+    fetch('http://localhost:5000/api/users/delete-account', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -99,7 +99,7 @@ class Account extends Component {
         <form onSubmit={this.onPassChangeSubmit}>
           <h2 className={styles.subtitle}>Change Password</h2>
           <div className={styles.inputWrapper}>
-            <label htmlFor='email'>Current Password</label>
+            <label htmlFor='currentPassword'>Current Password</label>
             <input
               type='password'
               name='currentPassword'
@@ -110,7 +110,7 @@ class Account extends Component {
             />
           </div>
           <div className={styles.inputWrapper}>
-            <label htmlFor='password'>New password</label>
+            <label htmlFor='newPassword'>New password</label>
             <input
               type='password'
               name='newPassword'
@@ -125,7 +125,7 @@ class Account extends Component {
             </p>
           </div>
           <div className={styles.inputWrapper}>
-            <label htmlFor='password'>Confirm new password</label>
+            <label htmlFor='newPasswordConfirm'>Confirm new password</label>
             <input
               type='password'
               name='newPasswordConfirm'
@@ -142,7 +142,7 @@ class Account extends Component {
         <form onSubmit={this.onDeleteAccSubmit}>
           <h2 className={styles.subtitle}>Delete Account</h2>
           <div className={styles.inputWrapper}>
-            <label htmlFor='password'>Enter password to confirm</label>
+            <label htmlFor='deletePassword'>Enter password to confirm</label>
             <input
               type='password'
               name='deletePassword'

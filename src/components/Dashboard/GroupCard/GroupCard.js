@@ -49,11 +49,14 @@ class GroupCard extends Component {
             </ul>
           </div>
           <div className={styles.actions}>
-            <Link to={`/groups/:${group.slug}`} className={styles.navButton}>
+            <Link
+              to={`/groups/view/${group.slug}`}
+              className={styles.navButton}
+            >
               View
             </Link>
             <Link
-              to={`/groups/${group.slug}/manage`}
+              to={`/groups/manage/${group.slug}`}
               className={styles.navButton}
             >
               Manage

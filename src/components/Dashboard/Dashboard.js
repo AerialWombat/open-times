@@ -77,7 +77,7 @@ class Dashboard extends Component {
           if (response.status === 200) {
             // Redirect to schedule view page for group with returned slug
             this.props.history.push({
-              pathname: `/groups/${data.slug}`,
+              pathname: `/groups/view/${data.slug}`,
               state: { success: true, message: 'Group Created!' }
             });
           } else {
