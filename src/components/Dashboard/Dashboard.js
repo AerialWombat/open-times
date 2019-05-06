@@ -111,7 +111,7 @@ class Dashboard extends Component {
               : styles.hideModalOverlay
           }
         >
-          <form className={styles.creationModal} onSubmit={this.onCreateSubmit}>
+          <form className={styles.modal} onSubmit={this.onCreateSubmit}>
             <h1 className={styles.title}>Create Group</h1>
             {this.getAlertList(this.state.alerts)}
             <div className={styles.inputWrapper}>
