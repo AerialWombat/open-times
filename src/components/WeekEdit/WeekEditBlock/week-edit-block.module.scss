@@ -1,0 +1,23 @@
+.notAvailable {
+  position: relative;
+  border-top: 1px solid #000;
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background-color: lightcoral;
+  }
+}
+
+.available {
+  position: relative;
+  border-top: 1px solid #000;
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  background-color: blue;
+}

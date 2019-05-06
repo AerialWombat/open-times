@@ -4,6 +4,8 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Account from './components/Account/Account';
 import Dashboard from './components/Dashboard/Dashboard';
+import WeekEdit from './components/WeekEdit/WeekEdit';
+import WeekView from './components/WeekView/WeekView';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import PrivateRoute from './components/PrivateRoute';
@@ -69,7 +71,10 @@ class App extends Component {
               component={Account}
               updateLoggedIn={this.updateLoggedIn}
             />
-            <PrivateRoute path='/groups' component={Dashboard} />
+            <PrivateRoute exact path='/groups' component={Dashboard} />
+            <Route path='/groups/view/:slug' component={WeekView} />
+
+            <Route path='/groups/edit/:slug' component={WeekEdit} />
           </Switch>
         </main>
       </div>
