@@ -29,9 +29,7 @@ const WeekEditBlock = ({
           <button
             className={styles.delete}
             onClick={() => deleteTimeBlock(blockID)}
-          >
-            x
-          </button>
+          />
         </div>
       );
     } else {

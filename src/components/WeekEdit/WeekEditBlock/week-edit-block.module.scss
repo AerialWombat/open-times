@@ -1,6 +1,8 @@
+@import '../../../App.scss';
+
 .notAvailable {
   position: relative;
-  border-top: 1px solid #000;
+  border-top: 1px solid #666;
   display: flex;
   align-items: center;
 
@@ -8,16 +10,32 @@
   transition: all 0.25s ease;
 
   &:hover {
-    background-color: lightcoral;
+    background-color: hsla(85, 100%, 35%, 0.9);
   }
 }
 
 .available {
   position: relative;
-  border-top: 1px solid #000;
+  border-right: 1px solid hsl(85, 100%, 35%);
+  border-left: 1px solid hsl(85, 100%, 35%);
   display: flex;
+  justify-content: center;
   align-items: center;
 
-  cursor: pointer;
-  background-color: blue;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background-color: $accent-color;
+
+  .delete {
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    &::after {
+      content: 'X';
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
 }

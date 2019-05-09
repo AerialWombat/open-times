@@ -3,10 +3,6 @@ import WeekEditBlock from './WeekEditBlock/WeekEditBlock.js';
 
 import styles from './week-edit.module.scss';
 
-// Create a schedule, convert to UST, and send POST request to add to schedule database
-
-// schedule is created from time blocks whenever time blocks updates
-
 class WeekEdit extends Component {
   constructor(props) {
     super(props);
@@ -189,36 +185,6 @@ class WeekEdit extends Component {
     };
   }
 
-  // Takes if from calling block and then deletes matching time block
-  deleteTimeBlock = blockID => {
-    const timeBlocks = this.state.timeBlocks.slice();
-    let blockIndex = timeBlocks.findIndex(timeBlock => {
-      return timeBlock.ID === blockID;
-    });
-    timeBlocks.splice(blockIndex, 1);
-    this.setState(
-      {
-        ...this.state,
-        timeBlocks: timeBlocks
-      },
-      this.updateSchedule
-    );
-  };
-
-  // Takes week index and returns string of weekday
-  getWeekDayString = weekIndex => {
-    const weekStrings = {
-      0: 'Sun',
-      1: 'Mon',
-      2: 'Tue',
-      3: 'Wed',
-      4: 'Thu',
-      5: 'Fri',
-      6: 'Sat'
-    };
-    return weekStrings[weekIndex];
-  };
-
   // Takes time index and returns string with formatted hour time
   getTimeString = timeIndex => {
     if (timeIndex === 0 || timeIndex === 24) {
@@ -232,8 +198,60 @@ class WeekEdit extends Component {
     }
   };
 
-  // NOTE: Get schedule from database for this user for this groups. Maybe not if not doing edit functionality
-  componentDidMount = () => {};
+  // Takes state's schedule array, convert to an array of integers, converts using local  UTC offset, and then makes POST request with converted schedule array //NOTE: with user data
+  onScheduleSubmit = () => {
+    const { schedule } = this.state;
+
+    const convertedSchedule = schedule.map(hour => {
+      if (hour.isNotAvailable) {
+        return 0;
+      } else {
+        return 1;
+      }
+    });
+    // console.log(`Initial integer array: ${convertedSchedule}`);
+    const UTCOffset = new Date().getTimezoneOffset() / 60;
+    // console.log(`UTC Offset: ${UTCOffset}`);
+
+    // Shifts array forward by UTC offset
+    if (UTCOffset > 0) {
+      const shiftedHours = convertedSchedule.splice(
+        convertedSchedule.length - UTCOffset,
+        UTCOffset
+      );
+      convertedSchedule.splice(0, 0, ...shiftedHours);
+    }
+    // Shifts array backward by UTC offset
+    else if (UTCOffset < 0) {
+      const shiftedHours = convertedSchedule.splice(0, Math.abs(UTCOffset));
+      convertedSchedule.splice(convertedSchedule.length, 0, ...shiftedHours);
+    }
+
+    // POST request to API's schedule setting route
+    fetch('http://localhost:5000/api/groups/set-schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        UUID: this.props.match.params.slug,
+        schedule: convertedSchedule
+      })
+    }).then(response => {
+      // Check for success response
+      if (response.status === 200) {
+        // Redirect to week view with success message
+        this.props.history.push({
+          pathname: `/groups/view/${this.props.match.params.slug}`,
+          state: { success: true, message: 'Schedule successfully set!' }
+        });
+      } else {
+        response
+          .json()
+          .then(data => console.log(data))
+          .catch(error => console.log(error));
+      }
+    });
+  };
 
   // Creates time block object from current selections
   createTimeBlock = event => {
@@ -286,7 +304,6 @@ class WeekEdit extends Component {
     for (let i = 0; i < 7; i++) {
       let hours = [];
 
-      //TODO: Remove previous key template when finished
       // Create hour blocks with corresponding time
       for (let j = 0; j < 24; j++) {
         hours.push(
@@ -304,7 +321,6 @@ class WeekEdit extends Component {
       }
       week.push(
         <div className={styles.weekDayContainer} key={i}>
-          <h1 className={styles.title}>{this.getWeekDayString(i)}</h1>
           {hours}
         </div>
       );
@@ -319,17 +335,31 @@ class WeekEdit extends Component {
         </div>
       );
     }
-    week.unshift(
-      <div className={styles.labelContainer}>
-        <div />
-        {labels}
-      </div>
-    );
+    week.unshift(<div className={styles.labelContainer}>{labels}</div>);
     return week;
   };
 
-  // Sets start time to selected block's and then shows modal
+  // Takes if from calling block and then deletes matching time block
+  deleteTimeBlock = blockID => {
+    const timeBlocks = this.state.timeBlocks.slice();
+    let blockIndex = timeBlocks.findIndex(timeBlock => {
+      return timeBlock.ID === blockID;
+    });
+    timeBlocks.splice(blockIndex, 1);
+    this.setState(
+      {
+        ...this.state,
+        timeBlocks: timeBlocks
+      },
+      this.updateSchedule
+    );
+  };
+
+  // Sets start time to selected block's
   setCurrentTimeBlock = (id, startTime, endTime) => {
+    // Reset select-option element to first option
+    document.getElementById('endTimeForm')[0].value = startTime + 1;
+
     this.setState({
       ...this.state,
       showModal: true,
@@ -380,7 +410,18 @@ class WeekEdit extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <div>Sidebar</div>
+        <header className={styles.header}>
+          <button className={styles.button} onClick={this.onScheduleSubmit}>
+            DONE
+          </button>
+          <div>SUN</div>
+          <div>MON</div>
+          <div>TUE</div>
+          <div>WED</div>
+          <div>THU</div>
+          <div>FRI</div>
+          <div>SAT</div>
+        </header>
 
         <div
           className={
@@ -389,7 +430,11 @@ class WeekEdit extends Component {
               : styles.hideModalOverlay
           }
         >
-          <form className={styles.modal} onSubmit={this.createTimeBlock}>
+          <form
+            id='endTimeForm'
+            className={styles.modal}
+            onSubmit={this.createTimeBlock}
+          >
             <h1 className={styles.title}>Select Ending Time</h1>
             <p>
               {this.getTimeString(this.state.currentStartTime)} <br /> to
