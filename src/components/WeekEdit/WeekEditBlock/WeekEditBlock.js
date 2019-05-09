@@ -6,7 +6,7 @@ import styles from './week-edit-block.module.scss';
 
 const WeekEditBlock = ({
   blockID,
-  weekday,
+  weekdayIndex,
   startTime,
   isNotAvailable,
   isStart,
@@ -18,7 +18,7 @@ const WeekEditBlock = ({
       <div
         className={styles.notAvailable}
         onClick={() => {
-          setCurrentTimeBlock(blockID, startTime, startTime + 1);
+          setCurrentTimeBlock(blockID, weekdayIndex, startTime, startTime + 1);
         }}
       />
     );

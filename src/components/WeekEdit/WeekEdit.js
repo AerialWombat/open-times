@@ -180,23 +180,11 @@ class WeekEdit extends Component {
       ],
       showModal: false,
       currentID: null,
-      currentStartTime: null,
-      currentEndTime: null
+      modalWeekday: null,
+      modalStartTime: null,
+      modalEndTime: null
     };
   }
-
-  // Takes time index and returns string with formatted hour time
-  getTimeString = timeIndex => {
-    if (timeIndex === 0 || timeIndex === 24) {
-      return '12 AM';
-    } else if (timeIndex > 0 && timeIndex <= 11) {
-      return `${timeIndex.toString()} AM`;
-    } else if (timeIndex === 12) {
-      return '12 PM';
-    } else {
-      return `${(timeIndex - 12).toString()} PM`;
-    }
-  };
 
   // Takes state's schedule array, convert to an array of integers, converts using local  UTC offset, and then makes POST request with converted schedule array //NOTE: with user data
   onScheduleSubmit = () => {
@@ -256,15 +244,15 @@ class WeekEdit extends Component {
   // Creates time block object from current selections
   createTimeBlock = event => {
     event.preventDefault();
-    const { currentID, currentStartTime, currentEndTime } = this.state;
+    const { currentID, modalStartTime, modalEndTime } = this.state;
     this.setState(
       {
         timeBlocks: [
           ...this.state.timeBlocks,
           {
             ID: currentID,
-            startTime: currentStartTime,
-            endTime: currentEndTime
+            startTime: modalStartTime,
+            endTime: modalEndTime
           }
         ]
       },
@@ -276,8 +264,8 @@ class WeekEdit extends Component {
   // Takes selected start time and generates remaining ending time option elements for modal
   createEndingTimeOptions = () => {
     const options = [];
-    for (let i = this.state.currentStartTime + 1; i <= 24; i++) {
-      if (i === this.state.currentStartTime) {
+    for (let i = this.state.modalStartTime + 1; i <= 24; i++) {
+      if (i === this.state.modalStartTime) {
         options.push(
           <option key={i} value={i} selected>
             {this.getTimeString(i)}
@@ -310,7 +298,7 @@ class WeekEdit extends Component {
           <WeekEditBlock
             key={i * 24 + j}
             blockID={i * 24 + j}
-            weekday={i}
+            weekdayIndex={i}
             startTime={j}
             isNotAvailable={schedule[i * 24 + j].isNotAvailable}
             isStart={schedule[i * 24 + j].isStart}
@@ -320,7 +308,7 @@ class WeekEdit extends Component {
         );
       }
       week.push(
-        <div className={styles.weekDayContainer} key={i}>
+        <div className={styles.weekdayContainer} key={i}>
           {hours}
         </div>
       );
@@ -355,8 +343,35 @@ class WeekEdit extends Component {
     );
   };
 
+  // Takes time index and returns string with formatted hour time
+  getTimeString = timeIndex => {
+    if (timeIndex === 0 || timeIndex === 24) {
+      return '12 AM';
+    } else if (timeIndex > 0 && timeIndex <= 11) {
+      return `${timeIndex.toString()} AM`;
+    } else if (timeIndex === 12) {
+      return '12 PM';
+    } else {
+      return `${(timeIndex - 12).toString()} PM`;
+    }
+  };
+
+  // Takes week index and returns string of weekday
+  getWeekdayString = weekIndex => {
+    const weekStrings = {
+      0: 'Sunday',
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday'
+    };
+    return weekStrings[weekIndex];
+  };
+
   // Sets start time to selected block's
-  setCurrentTimeBlock = (id, startTime, endTime) => {
+  setCurrentTimeBlock = (id, weekdayIndex, startTime, endTime) => {
     // Reset select-option element to first option
     document.getElementById('endTimeForm')[0].value = startTime + 1;
 
@@ -364,8 +379,9 @@ class WeekEdit extends Component {
       ...this.state,
       showModal: true,
       currentID: id,
-      currentStartTime: startTime,
-      currentEndTime: endTime
+      modalWeekday: this.getWeekdayString(weekdayIndex),
+      modalStartTime: startTime,
+      modalEndTime: endTime
     });
   };
 
@@ -373,7 +389,7 @@ class WeekEdit extends Component {
   onEndTimeSelect = event => {
     this.setState({
       ...this.state,
-      currentEndTime: event.target.value
+      modalEndTime: event.target.value
     });
   };
 
@@ -436,8 +452,9 @@ class WeekEdit extends Component {
             onSubmit={this.createTimeBlock}
           >
             <h1 className={styles.title}>Select Ending Time</h1>
+            <p>{this.state.modalWeekday}</p>
             <p>
-              {this.getTimeString(this.state.currentStartTime)} <br /> to
+              {this.getTimeString(this.state.modalStartTime)} <br /> to
             </p>
             <div className={styles.inputWrapper}>
               <label htmlFor='endTime'>Ending Time</label>
