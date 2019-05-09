@@ -1,8 +1,8 @@
 @import '../../App.scss';
 
 .container {
-  padding: 0.25rem 0.5rem;
-  height: auto;
+  padding: 0rem 0.5rem;
+  height: 7.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,7 +16,7 @@
     cursor: pointer;
   }
   .navList {
-    padding: 0.5rem 0.25rem;
+    padding: 0.25rem;
     display: flex;
     justify-content: flex-end;
     list-style: none;
@@ -50,5 +50,14 @@
   .active {
     background-color: rgba(0, 0, 0, 0.2);
     font-weight: bold;
+  }
+}
+
+/* Media Queries
+======================================*/
+
+@media screen and (min-height: 800px) {
+  .container {
+    height: 5%;
   }
 }
