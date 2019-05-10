@@ -1,3 +1,3 @@
 # Open Times
 
-A front-end website built using ReactJS
+A front-end for a web application built using ReactJS to find common free times in the week.
