@@ -1,10 +1,7 @@
 @import '../../../App.scss';
 
 .notAvailable {
-  position: relative;
   border-top: 1px solid #666;
-  display: flex;
-  align-items: center;
 
   cursor: pointer;
   transition: all 0.25s ease;
