@@ -42,7 +42,7 @@ const Navbar = ({ isLoggedIn, updateLoggedIn }) => {
   return (
     <nav className={styles.container}>
       <NavLink className={styles.brand} to='/'>
-        Brand
+        OpenTimes
       </NavLink>
 
       <ul className={styles.navList}>
