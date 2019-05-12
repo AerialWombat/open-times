@@ -1,0 +1,29 @@
+.viewBlock {
+  position: relative;
+  border-top: 1px solid #666;
+
+  cursor: pointer;
+  transition: 0.5s background-color ease;
+
+  &:hover {
+    border: 2px solid lightcoral;
+
+    transition-duration: 0s;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 99;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: #aaa 0px 1px 3px;
+}
+
+.hideTooltip {
+  position: relative;
+  display: none;
+  color: red;
+}
