@@ -2,7 +2,7 @@
 
 .container {
   padding: 0rem 0.5rem;
-  height: 7.5%;
+  height: 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,19 +12,20 @@
   .brand {
     color: rgba(255, 255, 255, 0.85);
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1rem;
     cursor: pointer;
   }
   .navList {
-    padding: 0.25rem;
+    padding: 0.1rem;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    font-size: 0.9rem;
     list-style: none;
 
     a {
       margin-left: 0.5rem;
       border-radius: 5px;
-      padding: 0.25rem 0.5rem;
+      padding: 0.25rem 0.4rem;
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.2);
@@ -37,7 +38,7 @@
       border-radius: 5px;
       padding: 0.25rem 0.5rem;
       font-family: 'Roboto', Arial, Helvetica, sans-serif; // For some reason, it uses system font unless specified
-      font-size: 1rem;
+      font-size: 0.9rem;
       background-color: transparent;
       cursor: pointer;
 
