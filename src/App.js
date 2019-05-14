@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Invite from './components/Invite/Invite';
 import Navbar from './components/Navbar/Navbar';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
@@ -72,8 +73,18 @@ class App extends Component {
               updateLoggedIn={this.updateLoggedIn}
             />
             <PrivateRoute exact path='/groups' component={Dashboard} />
+            <Route path='/groups/invite/:slug' component={Invite} />
             <Route path='/groups/view/:slug' component={WeekView} />
 
+            {
+              //TODO: Remove if unused
+              //   <Route
+              //   path='/groups/view/:slug'
+              //   render={props => (
+              //     <WeekView {...props} isLoggedIn={this.state.isLoggedIn} />
+              //   )}
+              // />
+            }
             <Route path='/groups/edit/:slug' component={WeekEdit} />
           </Switch>
         </main>
