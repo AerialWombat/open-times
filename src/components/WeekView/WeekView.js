@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import WeekViewBlock from './WeekViewBlock/WeekViewBlock';
 import ReactToolTip from 'react-tooltip';
+import { getTimeString, shiftByUTCOffset } from '../../utils.js';
 
 //TODO: Copied from week-edit. Remove unused styles
 import styles from './week-view.module.scss';
@@ -11,8 +12,6 @@ class WeekView extends Component {
     super(props);
     this.state = {
       title: null,
-      location: null,
-      description: null,
       members: [],
       combinedSchedule: [
         { amountAvailable: 0, membersAvailable: [] },
@@ -187,8 +186,8 @@ class WeekView extends Component {
     };
   }
 
-  //GET all members schedules, combine them into single array to store in state, convert to local time using UTC offset
   componentDidMount = () => {
+    //GET all members schedules, combine them into single array to store in state, convert to local time using UTC offset
     fetch(
       `http://localhost:5000/api/groups/view/${this.props.match.params.slug}`,
       {
@@ -213,7 +212,7 @@ class WeekView extends Component {
               location: location,
               description: description,
               members: members,
-              combinedSchedule: combinedSchedule
+              combinedSchedule: shiftByUTCOffset(combinedSchedule, 'toLocal')
             });
           } else {
             console.log(data);
@@ -255,7 +254,7 @@ class WeekView extends Component {
     for (let i = 0; i < 24; i++) {
       labels.push(
         <div key={i} className={styles.label}>
-          {this.getTimeString(i)}
+          {getTimeString(i)}
         </div>
       );
     }
@@ -263,38 +262,40 @@ class WeekView extends Component {
     return week;
   };
 
-  // Takes time index and returns string with formatted hour time
-  getTimeString = timeIndex => {
-    if (timeIndex === 0 || timeIndex === 24) {
-      return '12 AM';
-    } else if (timeIndex > 0 && timeIndex <= 11) {
-      return `${timeIndex.toString()} AM`;
-    } else if (timeIndex === 12) {
-      return '12 PM';
-    } else {
-      return `${(timeIndex - 12).toString()} PM`;
-    }
-  };
-
   render() {
+    const { title, location, description, members } = this.state;
     return (
       <div className={styles.container}>
         <header className={styles.header}>
-          <Link
-            to={`/groups/edit/${this.props.match.params.slug}`}
-            className={styles.button}
-          >
-            EDIT
-          </Link>
-          <div>SUN</div>
-          <div>MON</div>
-          <div>TUE</div>
-          <div>WED</div>
-          <div>THU</div>
-          <div>FRI</div>
-          <div>SAT</div>
+          <span>View your group's open times</span>
+          <h1>{title}</h1>
+          <div className={styles.labels}>
+            <Link
+              to={{
+                pathname: `/groups/edit/${this.props.match.params.slug}`,
+                state: { fromInvite: false }
+              }}
+              className={styles.button}
+              data-tip='Set a new schedule'
+            >
+              NEW
+            </Link>
+            <div>SUN</div>
+            <div>MON</div>
+            <div>TUE</div>
+            <div>WED</div>
+            <div>THU</div>
+            <div>FRI</div>
+            <div>SAT</div>
+          </div>
         </header>
         <div className={styles.weekContainer}>{this.createWeekTable()}</div>
+        <ReactToolTip
+          className={styles.tooltip}
+          effect='solid'
+          place='top'
+          type='light'
+        />
         <ReactToolTip
           id='members'
           className={styles.tooltip}
@@ -308,8 +309,8 @@ class WeekView extends Component {
                 <React.Fragment>
                   <p>Members Available:</p>
                   <ul>
-                    {members.map(member => {
-                      return <li>{member}</li>;
+                    {members.map((member, index) => {
+                      return <li key={index}>{member}</li>;
                     })}
                   </ul>
                 </React.Fragment>
