@@ -8,7 +8,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import WeekEdit from './components/WeekEdit/WeekEdit';
 import WeekView from './components/WeekView/WeekView';
 import { Switch, Route, withRouter } from 'react-router-dom';
-
 import PrivateRoute from './components/PrivateRoute';
 
 import './App.scss';
@@ -75,16 +74,6 @@ class App extends Component {
             <PrivateRoute exact path='/groups' component={Dashboard} />
             <Route path='/groups/invite/:slug' component={Invite} />
             <Route path='/groups/view/:slug' component={WeekView} />
-
-            {
-              //TODO: Remove if unused
-              //   <Route
-              //   path='/groups/view/:slug'
-              //   render={props => (
-              //     <WeekView {...props} isLoggedIn={this.state.isLoggedIn} />
-              //   )}
-              // />
-            }
             <Route path='/groups/edit/:slug' component={WeekEdit} />
           </Switch>
         </main>
