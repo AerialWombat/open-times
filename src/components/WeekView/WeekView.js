@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Button from '../../shared-components/Button/Button';
+import Sidebar from '../../shared-components/Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import WeekViewBlock from './WeekViewBlock/WeekViewBlock';
 import ReactToolTip from 'react-tooltip';
 import { getTimeString, shiftByUTCOffset } from '../../utils.js';
 
-//TODO: Copied from week-edit. Remove unused styles
 import styles from './week-view.module.scss';
 
 class WeekView extends Component {
@@ -182,9 +183,18 @@ class WeekView extends Component {
         { amountAvailable: 0, membersAvailable: [] },
         { amountAvailable: 0, membersAvailable: [] },
         { amountAvailable: 0, membersAvailable: [] }
-      ]
+      ],
+      showSidebar: false
     };
   }
+
+  showSidebar = () => {
+    this.setState({ ...this.state, showSidebar: true });
+  };
+
+  hideSidebar = () => {
+    this.setState({ ...this.state, showSidebar: false });
+  };
 
   componentDidMount = () => {
     //GET all members schedules, combine them into single array to store in state, convert to local time using UTC offset
@@ -270,6 +280,7 @@ class WeekView extends Component {
           <span>View your group's open times</span>
           <h1>{title}</h1>
           <div className={styles.labels}>
+            {/*
             <Link
               to={{
                 pathname: `/groups/edit/${this.props.match.params.slug}`,
@@ -280,6 +291,8 @@ class WeekView extends Component {
             >
               NEW
             </Link>
+            */}
+            <Button title={'Menu'} onClickHandle={this.showSidebar} />
             <div>SUN</div>
             <div>MON</div>
             <div>TUE</div>
@@ -289,13 +302,31 @@ class WeekView extends Component {
             <div>SAT</div>
           </div>
         </header>
+        <Sidebar
+          isOpen={this.state.showSidebar}
+          hideSidebarHandle={this.hideSidebar}
+        >
+          <Link
+            to={{
+              pathname: `/groups/edit/${this.props.match.params.slug}`,
+              state: { fromInvite: false }
+            }}
+            className={styles.button}
+          >
+            <Button title={'SET SCHEDULE'} />
+          </Link>
+          <h1>Location</h1>
+          <p>{location}</p>
+          <h1>Description</h1>
+          <p>{description}</p>
+          <h1>Members</h1>
+          <ul>
+            {members.map(member => {
+              return <li>{member}</li>;
+            })}
+          </ul>
+        </Sidebar>
         <div className={styles.weekContainer}>{this.createWeekTable()}</div>
-        <ReactToolTip
-          className={styles.tooltip}
-          effect='solid'
-          place='top'
-          type='light'
-        />
         <ReactToolTip
           id='members'
           className={styles.tooltip}
