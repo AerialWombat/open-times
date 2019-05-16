@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Alert from '../../shared-components/Alert/Alert';
+import Input from '../../shared-components/Input/Input';
+import Button from '../../shared-components/Button/Button';
 import { IconContext } from 'react-icons';
 import { FaUserEdit } from 'react-icons/fa';
 
@@ -55,6 +57,7 @@ class Account extends Component {
         .catch(error => console.log(error));
     });
   };
+
   onDeleteAccSubmit = event => {
     event.preventDefault();
     const { deletePassword } = this.state;
@@ -87,74 +90,58 @@ class Account extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <h1 className={styles.title}>
-          <IconContext.Provider
-            value={{ color: 'black', className: 'global-class-name' }}
-          >
-            <FaUserEdit />
-          </IconContext.Provider>
-          Account
-        </h1>
         {this.getAlertList(this.state.alerts)}
         <form onSubmit={this.onPassChangeSubmit}>
+          <h1 className={styles.title}>
+            <IconContext.Provider
+              value={{ color: 'black', className: 'global-class-name' }}
+            >
+              <FaUserEdit />
+            </IconContext.Provider>
+            Account
+          </h1>
           <h2 className={styles.subtitle}>Change Password</h2>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='currentPassword'>Current Password</label>
-            <input
-              type='password'
-              name='currentPassword'
-              id='currentPassword'
-              placeholder='Enter current password'
-              required
-              onChange={this.onInputChange}
-            />
-          </div>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='newPassword'>New password</label>
-            <input
-              type='password'
-              name='newPassword'
-              id='newPassword'
-              placeholder='Enter new password'
-              required
-              onChange={this.onInputChange}
-            />
-            <p className={styles.passRequirements}>
-              Password should be at least 8 characters including a number and a
-              lowercase letter.
-            </p>
-          </div>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='newPasswordConfirm'>Confirm new password</label>
-            <input
-              type='password'
-              name='newPasswordConfirm'
-              id='newPasswordConfirm'
-              placeholder='Re-type new password'
-              required
-              onChange={this.onInputChange}
-            />
-          </div>
-          <button className={styles.grey} type='submit'>
-            Change Password
-          </button>
+          <Input
+            type={'password'}
+            title={'Current Password'}
+            name={'currentPassword'}
+            placeholder={'Enter current password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
+          />
+          <Input
+            type={'password'}
+            title={'New Password'}
+            name={'newPassword'}
+            placeholder={'Enter new password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
+          />
+          <span className={styles.passRequirements}>
+            Password should be at least 8 characters including a number and a
+            lowercase letter.
+          </span>
+          <Input
+            type={'password'}
+            title={'New Password'}
+            name={'newPasswordConfirm'}
+            placeholder={'Re-type new password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
+          />
+          <Button title={'Change Password'} />
         </form>
         <form onSubmit={this.onDeleteAccSubmit}>
           <h2 className={styles.subtitle}>Delete Account</h2>
-          <div className={styles.inputWrapper}>
-            <label htmlFor='deletePassword'>Enter password to confirm</label>
-            <input
-              type='password'
-              name='deletePassword'
-              id='deletePassword'
-              placeholder='Enter password'
-              required
-              onChange={this.onInputChange}
-            />
-          </div>
-          <button className={styles.grey} type='submit'>
-            Delete Account
-          </button>
+          <Input
+            type={'password'}
+            title={'Enter password to confirm'}
+            name={'deletePassword'}
+            placeholder={'Enter password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
+          />
+          <Button title={'Delete Account'} />
         </form>
       </div>
     );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Alert from '../../shared-components/Alert/Alert';
+import Input from '../../shared-components/Input/Input';
+import Button from '../../shared-components/Button/Button';
 import { IconContext } from 'react-icons';
 import { FaSignInAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -78,43 +80,39 @@ class Login extends Component {
   // Displays list of Alert components if alerts exist in state
   render() {
     return (
-      <form className={styles.container} onSubmit={this.onLoginSubmit}>
-        <h1 className={styles.title}>
-          <IconContext.Provider
-            value={{ color: 'black', className: 'global-class-name' }}
-          >
-            <FaSignInAlt />
-          </IconContext.Provider>
-          Login
-        </h1>
-        {this.getAlertList(this.state.alerts)}
-        <div className={styles.inputWrapper}>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            name='email'
-            id='email'
-            placeholder='Enter email'
-            required
-            onChange={this.onInputChange}
+      <div className={styles.container}>
+        <form onSubmit={this.onLoginSubmit}>
+          <h1 className={styles.title}>
+            <IconContext.Provider
+              value={{ color: 'black', className: 'global-class-name' }}
+            >
+              <FaSignInAlt />
+            </IconContext.Provider>
+            Login
+          </h1>
+          {this.getAlertList(this.state.alerts)}
+          <Input
+            type={'email'}
+            title={'Email'}
+            name={'email'}
+            placeholder={'Enter email'}
+            required={true}
+            onChangeHandle={this.onInputChange}
           />
-        </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            id='password'
-            placeholder='Enter password'
-            required
-            onChange={this.onInputChange}
+          <Input
+            type={'password'}
+            title={'Password'}
+            name={'password'}
+            placeholder={'Enter password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
           />
-        </div>
-        <button type='submit'>Login</button>
-        <p className={styles.navigation}>
-          Need an account? <Link to='/users/register'>Sign Up</Link>
-        </p>
-      </form>
+          <Button title={'Login'} />
+          <p className={styles.navigation}>
+            Need an account? <Link to='/users/register'>Sign Up</Link>
+          </p>
+        </form>
+      </div>
     );
   }
 }

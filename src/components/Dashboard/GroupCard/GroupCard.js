@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../../../shared-components/Button/Button';
 import { Link } from 'react-router-dom';
 
 import styles from './group-card.module.scss';
@@ -49,17 +50,11 @@ class GroupCard extends Component {
             </ul>
           </div>
           <div className={styles.actions}>
-            <Link
-              to={`/groups/view/${group.slug}`}
-              className={styles.navButton}
-            >
-              View
+            <Link to={`/groups/view/${group.slug}`}>
+              <Button title={'View'} />
             </Link>
-            <Link
-              to={`/groups/manage/${group.slug}`}
-              className={styles.navButton}
-            >
-              Manage
+            <Link to={`/groups/manage/${group.slug}`}>
+              <Button title={'Manage'} />
             </Link>
           </div>
         </div>

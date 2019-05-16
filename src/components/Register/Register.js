@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Alert from '../../shared-components/Alert/Alert';
+import Input from '../../shared-components/Input/Input';
+import Button from '../../shared-components/Button/Button';
 import { IconContext } from 'react-icons';
 import { FaUserPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -78,71 +80,59 @@ class Register extends Component {
   // Displays list of Alert components if alerts exist in state
   render() {
     return (
-      <form className={styles.container} onSubmit={this.onRegisterSubmit}>
-        <h1 className={styles.title}>
-          <IconContext.Provider
-            value={{ color: 'black', className: 'global-class-name' }}
-          >
-            <FaUserPlus />
-          </IconContext.Provider>
-          Register
-        </h1>
-        {this.getAlertList(this.state.alerts)}
-        <div className={styles.inputWrapper}>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            name='email'
-            id='email'
-            placeholder='Enter email'
-            required
-            onChange={this.onInputChange}
+      <div className={styles.container}>
+        <form onSubmit={this.onRegisterSubmit}>
+          <h1 className={styles.title}>
+            <IconContext.Provider
+              value={{ color: 'black', className: 'global-class-name' }}
+            >
+              <FaUserPlus />
+            </IconContext.Provider>
+            Register
+          </h1>
+          {this.getAlertList(this.state.alerts)}
+          <Input
+            type={'email'}
+            title={'Email'}
+            name={'email'}
+            placeholder={'Enter email'}
+            required={true}
+            onChangeHandle={this.onInputChange}
           />
-        </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='username'>Username</label>
-          <input
-            type='text'
-            name='username'
-            id='username'
-            placeholder='Enter username'
-            required
-            onChange={this.onInputChange}
+          <Input
+            type={'text'}
+            title={'Username'}
+            name={'username'}
+            placeholder={'Enter username'}
+            required={true}
+            onChangeHandle={this.onInputChange}
           />
-        </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            id='password'
-            placeholder='Enter password'
-            required
-            onChange={this.onInputChange}
-            pattern='(?=.*\d)(?=.*[a-z]).{8,}'
-            title='Must be at least 8 characters including a number and a lowercase letter.'
+          <Input
+            type={'password'}
+            title={'Password'}
+            name={'password'}
+            placeholder={'Enter password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
           />
-          <p className={styles.passRequirements}>
+          <span className={styles.passRequirements}>
             Password should be at least 8 characters including a number and a
             lowercase letter.
-          </p>
-        </div>
-        <div className={styles.inputWrapper}>
-          <label htmlFor='password2'>Confirm Password</label>
-          <input
-            type='password'
-            name='passwordConfirm'
-            id='passwordConfirm'
-            placeholder='Re-type password'
-            required
-            onChange={this.onInputChange}
+          </span>
+          <Input
+            type={'password'}
+            title={'Confirm Password'}
+            name={'passwordConfirm'}
+            placeholder={'Re-type password'}
+            required={true}
+            onChangeHandle={this.onInputChange}
           />
-        </div>
-        <button type='submit'>Register</button>
-        <p className={styles.navigation}>
-          Have an account? <Link to='/users/login'>Sign In</Link>
-        </p>
-      </form>
+          <Button title={'Submit'} />
+          <span className={styles.navigation}>
+            Have an account? <Link to='/users/login'>Sign In</Link>
+          </span>
+        </form>
+      </div>
     );
   }
 }

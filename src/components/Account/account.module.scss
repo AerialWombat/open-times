@@ -3,12 +3,7 @@
 .container {
   margin: 1rem;
   border: solid 1px #aaa;
-  padding: 1rem 0.5rem;
-
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  align-content: center;
+  padding: 1rem 2.5rem 2rem;
 
   background-color: #fff;
   box-shadow: #aaa 0px 1px 3px;
@@ -27,11 +22,10 @@
   }
 
   form {
-    width: 100%;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    align-content: center;
+    justify-content: space-between;
 
     .subtitle {
       margin: 0.5rem auto;
@@ -39,70 +33,26 @@
       font-size: 1.25rem;
     }
 
-    .inputWrapper {
+    div {
       margin-bottom: 0.75rem;
-      max-width: 80%;
-
-      display: flex;
-      flex-flow: column nowrap;
-
-      min-width: 80%;
-
-      label {
-        margin-bottom: 0.25rem;
-
-        font-weight: bold;
-      }
-
-      input {
-        border: none;
-        border-bottom: 2px solid rgba(34, 36, 38, 0.15);
-        padding: 0.25rem;
-
-        transition: 0.25s ease all;
-
-        &:focus {
-          border-bottom: 2px solid $accent-color;
-        }
-
-        &:required:invalid {
-          outline: none;
-        }
-      }
+      min-width: 100%;
     }
 
     .passRequirements {
+      width: 100%;
+      margin: -5px 0 5px;
       font-size: 0.75rem;
       color: #888;
     }
 
     button {
-      margin-bottom: 0.5rem;
-      border: 1px solid $accent-color;
-      border-radius: 5px;
-      padding: 0.4rem;
-      min-width: 80%;
+      width: 100%;
+      margin-bottom: 0.75rem;
+      color: #000;
+      background-color: #e0e1e2;
 
-      color: #fff;
-      font-weight: bold;
-
-      background-color: $accent-color;
-
-      cursor: pointer;
-      transition: 0.25s all ease;
-
-      &:hover {
-        background-color: #518c00;
-      }
-
-      &.grey {
-        border: 1px solid #bbb;
-        background-color: #e0e1e2;
-        color: #000;
-
-        &:hover {
-          background-color: #cacbcd;
-        }
+      &::before {
+        background-color: #cacbcd;
       }
     }
   }
@@ -113,8 +63,9 @@
 
 @media screen and (min-width: 760px) {
   .container {
-    max-width: 40%;
-    margin: 2rem auto;
+    max-width: 650px;
+    margin: 5rem auto 0;
+    padding: 1rem 7.5rem 2rem;
 
     .title {
       font-size: 3rem;
@@ -124,6 +75,7 @@
 
 @media screen and (min-width: 1140px) {
   .container {
+    max-width: 800px;
     margin: 5rem auto;
 
     .title {
