@@ -1,0 +1,38 @@
+.form-group {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+
+  label {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+
+  input {
+    border: 2px solid transparent;
+    border-bottom-color: hsla(85, 100%, 30%, 0.4);
+    padding-bottom: 2px;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus ~ span {
+      transform-origin: bottom left;
+      transform: scaleX(1);
+    }
+  }
+
+  span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #599900;
+    transform-origin: bottom right;
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+  }
+}
