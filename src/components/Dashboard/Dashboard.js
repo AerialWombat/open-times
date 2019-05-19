@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Alert from '../../shared-components/Alert/Alert';
+import Input from '../../shared-components/Input/Input';
+import Button from '../../shared-components/Button/Button';
+import Modal from '../../shared-components/Modal/Modal';
 import GroupCard from './GroupCard/GroupCard';
 import { FaPlusCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
@@ -36,9 +39,14 @@ class Dashboard extends Component {
     );
   };
 
-  toggleModalVisibility = event => {
+  hideModal = event => {
     event.preventDefault();
-    this.setState({ ...this.state, showModal: !this.state.showModal });
+    this.setState({ showModal: false });
+  };
+
+  showModal = event => {
+    event.preventDefault();
+    this.setState({ showModal: true });
   };
 
   onInputChange = event => {
@@ -104,71 +112,53 @@ class Dashboard extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <div
-          className={
-            this.state.showModal
-              ? styles.showModalOverlay
-              : styles.hideModalOverlay
-          }
-        >
-          <form className={styles.modal} onSubmit={this.onCreateSubmit}>
-            <h1 className={styles.title}>Create Group</h1>
+        <Modal isOpen={this.state.showModal} hideModalHandle={this.hideModal}>
+          <form onSubmit={this.onCreateSubmit}>
+            <h1>Create Group</h1>
             {this.getAlertList(this.state.alerts)}
-            <div className={styles.inputWrapper}>
-              <label htmlFor='name'>Name</label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Enter group name'
-                required
-                onChange={this.onInputChange}
-              />
-            </div>
-            <div className={styles.inputWrapper}>
-              <label htmlFor='location'>Location</label>
-              <input
-                type='text'
-                name='location'
-                id='location'
-                placeholder='Enter location (optional)'
-                onChange={this.onInputChange}
-              />
-            </div>
-            <div className={styles.inputWrapper}>
-              <label htmlFor='description'>Description</label>
-              <textarea
-                type='text'
-                name='description'
-                id='description'
-                placeholder='Enter description (optional)'
-                onChange={this.onInputChange}
-              />
-            </div>
-            <button type='submit'>Create</button>
-            <button
-              className={styles.grey}
-              onClick={this.toggleModalVisibility}
-            >
-              Go Back
-            </button>
+            <Input
+              type={'text'}
+              title={'Name'}
+              name={'name'}
+              placeholder={'Enter group name'}
+              required={true}
+              onChangeHandle={this.onInputChange}
+            />
+            <Input
+              type={'text'}
+              title={'Location'}
+              name={'location'}
+              placeholder={'Enter location (optional)'}
+              required={false}
+              onChangeHandle={this.onInputChange}
+            />
+            <Input
+              type={'text'}
+              title={'Description'}
+              name={'description'}
+              placeholder={'Enter description (optional)'}
+              required={false}
+              onChangeHandle={this.onInputChange}
+            />
+            <Button title={'Create'} />
+            <Button title={'Go Back'} onClickHandle={this.hideModal} />
           </form>
-        </div>
+        </Modal>
 
         <header>
           <h1>Your Groups</h1>
-          <button
-            className={styles.navButton}
-            onClick={this.toggleModalVisibility}
-          >
+          <Button onClickHandle={this.showModal}>
             <IconContext.Provider value={{ size: '1.5em' }}>
               <FaPlusCircle />
             </IconContext.Provider>
             <span className={styles.btnText}>Create Group</span>
-          </button>
+          </Button>
         </header>
 
-        {this.getGroupCards(this.state.groups)}
+        <div className={styles.cardsContainer}>
+          {' '}
+          {this.getGroupCards(this.state.groups)}
+        </div>
       </div>
     );
   }

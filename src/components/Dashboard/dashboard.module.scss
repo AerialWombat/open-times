@@ -2,9 +2,11 @@
 
 .container {
   position: relative;
-  padding: 1rem;
+  height: 100%;
 
   header {
+    height: 10%;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,22 +17,10 @@
       font-size: 1.75rem;
     }
 
-    .navButton {
+    button {
       display: flex;
       justify-content: center;
       align-items: center;
-      border: none;
-      border-radius: 2px;
-      padding: 0.5rem;
-      width: auto;
-      background-color: $accent-color;
-
-      cursor: pointer;
-      transition: background-color 0.25s ease;
-
-      &:hover {
-        background-color: #518c00;
-      }
 
       .btnText {
         display: none;
@@ -38,110 +28,39 @@
     }
   }
 
-  .showModalOverlay {
-    position: fixed;
-    top: 0;
-    margin-left: -1rem;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 99;
-
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.25s ease;
+  .cardsContainer {
+    height: 90%;
+    overflow-y: auto;
   }
 
-  .hideModalOverlay {
-    position: fixed;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  .modal {
-    border: solid 1px #aaa;
-    padding: 1rem 0.5rem;
-    min-width: 275px;
-    width: 50%;
-
+  form {
+    min-width: 200px;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
     align-items: center;
-    align-content: center;
+    justify-content: space-between;
 
-    background-color: #fff;
-    box-shadow: #222 0px 1px 3px;
-
-    .title {
-      display: flex;
-      align-items: center;
-      font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
-      letter-spacing: 1px;
+    div {
+      margin-bottom: 0.75rem;
+      min-width: 100%;
     }
 
-    .inputWrapper {
-      margin-bottom: 0.75rem;
-
-      display: flex;
-      flex-flow: column nowrap;
-
-      min-width: 80%;
-
-      label {
-        margin-bottom: 0.25rem;
-
-        font-weight: bold;
-      }
-
-      input,
-      textarea {
-        border: none;
-        border-bottom: 2px solid rgba(34, 36, 38, 0.15);
-        padding: 0.25rem;
-        font-family: 'Roboto', Arial, Helvetica, sans-serif;
-        font-size: 0.9rem;
-
-        resize: none;
-        transition: 0.25s ease all;
-
-        &:focus {
-          border-bottom: 2px solid $accent-color;
-        }
-
-        &:required:invalid {
-          outline: none;
-        }
-      }
+    .passRequirements {
+      width: 100%;
+      margin: -5px 0 5px;
+      font-size: 0.75rem;
+      color: #888;
     }
 
     button {
-      margin-bottom: 0.5rem;
-      border: 1px solid $accent-color;
-      border-radius: 5px;
-      padding: 0.4rem;
-      min-width: 80%;
+      width: 100%;
+      margin-bottom: 0.75rem;
 
-      color: #fff;
-      font-weight: bold;
-
-      background-color: $accent-color;
-
-      cursor: pointer;
-      transition: 0.25s all ease;
-
-      &:hover {
-        background-color: #518c00;
-      }
-
-      &.grey {
-        border: 1px solid #bbb;
-        background-color: #e0e1e2;
+      &:nth-of-type(2) {
         color: #000;
+        background-color: #e0e1e2;
 
-        &:hover {
+        &::before {
           background-color: #cacbcd;
         }
       }
@@ -156,12 +75,16 @@
   .container {
     padding: 1rem;
 
+    form {
+      min-width: 275px;
+    }
+
     header {
       h1 {
         font-size: 2.5rem;
       }
 
-      .navButton {
+      button {
         padding: 0.5rem 1rem;
 
         .btnText {
