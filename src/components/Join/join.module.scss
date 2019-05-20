@@ -1,0 +1,98 @@
+.container {
+  margin: 1rem;
+  border: solid 1px #aaa;
+  padding: 1rem 2.5rem 2rem;
+  background-color: #fff;
+  box-shadow: #aaa 0px 1px 3px;
+
+  h1 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  h1,
+  .subtitle {
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .divider {
+    position: relative;
+    margin: 1.75rem 0;
+    height: 2px;
+    background-color: #599900;
+
+    &::after {
+      content: 'OR';
+      position: relative;
+      top: -1.6rem;
+      left: 50%;
+      padding: 0.75rem;
+      display: inline-block;
+      font-size: 1.25rem;
+      font-weight: bold;
+      background-color: #fff;
+      transform: translateX(-50%);
+    }
+  }
+
+  form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+    .subtitle {
+      margin: 0.5rem auto;
+      font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+      font-size: 1.25rem;
+    }
+
+    div {
+      margin-bottom: 0.75rem;
+      min-width: 100%;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+/* Media Queries
+======================================*/
+
+@media screen and (min-width: 760px) {
+  .container {
+    max-width: 650px;
+    margin: 5rem auto 0;
+    padding: 1rem 7.5rem 2rem;
+
+    .title {
+      font-size: 3rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1140px) {
+  .container {
+    max-width: 800px;
+    margin: 5rem auto;
+
+    .title {
+      font-size: 4rem;
+    }
+
+    button {
+      padding: 0.6rem 0.5rem;
+    }
+  }
+}
