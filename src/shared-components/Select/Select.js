@@ -6,6 +6,7 @@ const Select = props => {
       <label htmlFor={props.name}>{props.title}</label>
       <select
         name={props.name}
+        id={props.name}
         // value={props.value}
         onChange={props.onChangeHandle}
       >
@@ -14,8 +15,12 @@ const Select = props => {
         </option>
         {props.options.map(option => {
           return (
-            <option key={option} value={option} label={option}>
-              {option}
+            <option
+              key={option.value}
+              value={option.value}
+              label={option.label}
+            >
+              {option.label}
             </option>
           );
         })}
