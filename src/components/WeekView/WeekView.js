@@ -13,6 +13,8 @@ class WeekView extends Component {
     super(props);
     this.state = {
       title: null,
+      location: null,
+      description: null,
       members: [],
       combinedSchedule: [
         { amountAvailable: 0, membersAvailable: [] },
@@ -280,18 +282,6 @@ class WeekView extends Component {
           <span>View your group's open times</span>
           <h1>{title}</h1>
           <div className={styles.labels}>
-            {/*
-            <Link
-              to={{
-                pathname: `/groups/edit/${this.props.match.params.slug}`,
-                state: { fromInvite: false }
-              }}
-              className={styles.button}
-              data-tip='Set a new schedule'
-            >
-              NEW
-            </Link>
-            */}
             <Button title={'Menu'} onClickHandle={this.showSidebar} />
             <div>SUN</div>
             <div>MON</div>
@@ -307,19 +297,16 @@ class WeekView extends Component {
           hideSidebarHandle={this.hideSidebar}
         >
           <Link
-            to={{
-              pathname: `/groups/edit/${this.props.match.params.slug}`,
-              state: { fromInvite: false }
-            }}
+            to={`/groups/edit/${this.props.match.params.slug}`}
             className={styles.button}
           >
-            <Button title={'SET SCHEDULE'} />
+            <Button title={'Set a schedule'} />
           </Link>
           <h1>Location</h1>
           <p>{location}</p>
           <h1>Description</h1>
           <p>{description}</p>
-          <h1>Members</h1>
+          <h1>Current Members</h1>
           <ul>
             {members.map(member => {
               return <li>{member}</li>;
