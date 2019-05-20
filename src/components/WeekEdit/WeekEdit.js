@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
+import Button from '../../shared-components/Button/Button';
+import Select from '../../shared-components/Select/Select';
+import Sidebar from '../../shared-components/Sidebar/Sidebar';
+import { Link } from 'react-router-dom';
+import Modal from '../../shared-components/Modal/Modal';
 import WeekEditBlock from './WeekEditBlock/WeekEditBlock.js';
+import ReactToolTip from 'react-tooltip';
+import {
+  getTimeString,
+  getWeekdayString,
+  shiftByUTCOffset
+} from '../../utils.js';
 
 import styles from './week-edit.module.scss';
 
@@ -7,6 +18,8 @@ class WeekEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: null,
+      anonUsername: null,
       timeBlocks: [],
       schedule: [
         { isNotAvailable: true, isStart: false },
@@ -179,6 +192,7 @@ class WeekEdit extends Component {
         { isNotAvailable: true, isStart: false }
       ],
       showModal: false,
+      showSidebar: false,
       currentID: null,
       modalWeekday: null,
       modalStartTime: null,
@@ -186,9 +200,48 @@ class WeekEdit extends Component {
     };
   }
 
-  // Takes state's schedule array, convert to an array of integers, converts using local  UTC offset, and then makes POST request with converted schedule array //NOTE: with user data
+  componentDidMount = () => {
+    if (this.props.location.state) {
+      this.setState({
+        ...this.state,
+        anonUsername: this.props.location.state.anonUsername
+      });
+    }
+
+    fetch(
+      `http://localhost:5000/api/groups/info/${this.props.match.params.slug}`,
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    )
+      .then(response => {
+        response.json().then(data => {
+          if (response.status === 200) {
+            this.setState({ title: data.title });
+          } else {
+            console.log(data);
+          }
+        });
+      })
+      .catch(error => console.log(error));
+  };
+
+  onInputChange = event => {
+    const { value, name } = event.target;
+    this.setState({ ...this.state, [name]: value });
+  };
+
+  // Takes state's schedule array, convert to an array of integers, converts using local  UTC offset, and then makes POST request with converted schedule array
   onScheduleSubmit = () => {
     const { schedule } = this.state;
+
+    if (!this.state.anonUsername && !this.props.isLoggedIn) {
+      this.props.history.push({
+        pathname: '/users/login',
+        state: { success: false, message: 'Please log in.' }
+      });
+    }
 
     const convertedSchedule = schedule.map(hour => {
       if (hour.isNotAvailable) {
@@ -197,23 +250,6 @@ class WeekEdit extends Component {
         return 1;
       }
     });
-    // console.log(`Initial integer array: ${convertedSchedule}`);
-    const UTCOffset = new Date().getTimezoneOffset() / 60;
-    // console.log(`UTC Offset: ${UTCOffset}`);
-
-    // Shifts array forward by UTC offset
-    if (UTCOffset > 0) {
-      const shiftedHours = convertedSchedule.splice(
-        convertedSchedule.length - UTCOffset,
-        UTCOffset
-      );
-      convertedSchedule.splice(0, 0, ...shiftedHours);
-    }
-    // Shifts array backward by UTC offset
-    else if (UTCOffset < 0) {
-      const shiftedHours = convertedSchedule.splice(0, Math.abs(UTCOffset));
-      convertedSchedule.splice(convertedSchedule.length, 0, ...shiftedHours);
-    }
 
     // POST request to API's schedule setting route
     fetch('http://localhost:5000/api/groups/set-schedule', {
@@ -222,7 +258,8 @@ class WeekEdit extends Component {
       credentials: 'include',
       body: JSON.stringify({
         UUID: this.props.match.params.slug,
-        schedule: convertedSchedule
+        anonUsername: this.state.anonUsername,
+        schedule: shiftByUTCOffset(convertedSchedule, 'toUTC')
       })
     }).then(response => {
       // Check for success response
@@ -258,26 +295,14 @@ class WeekEdit extends Component {
       },
       this.updateSchedule
     );
-    this.toggleModalVisibility(event);
+    this.hideModal(event);
   };
 
   // Takes selected start time and generates remaining ending time option elements for modal
   createEndingTimeOptions = () => {
     const options = [];
     for (let i = this.state.modalStartTime + 1; i <= 24; i++) {
-      if (i === this.state.modalStartTime) {
-        options.push(
-          <option key={i} value={i} selected>
-            {this.getTimeString(i)}
-          </option>
-        );
-      } else {
-        options.push(
-          <option key={i} value={i}>
-            {this.getTimeString(i)}
-          </option>
-        );
-      }
+      options.push({ value: i, label: getTimeString(i) });
     }
 
     return options;
@@ -319,7 +344,7 @@ class WeekEdit extends Component {
     for (let i = 0; i < 24; i++) {
       labels.push(
         <div key={i} className={styles.label}>
-          {this.getTimeString(i)}
+          {getTimeString(i)}
         </div>
       );
     }
@@ -327,7 +352,7 @@ class WeekEdit extends Component {
     return week;
   };
 
-  // Takes if from calling block and then deletes matching time block
+  // Takes id from calling block and then deletes matching time block object
   deleteTimeBlock = blockID => {
     const timeBlocks = this.state.timeBlocks.slice();
     let blockIndex = timeBlocks.findIndex(timeBlock => {
@@ -343,33 +368,6 @@ class WeekEdit extends Component {
     );
   };
 
-  // Takes time index and returns string with formatted hour time
-  getTimeString = timeIndex => {
-    if (timeIndex === 0 || timeIndex === 24) {
-      return '12 AM';
-    } else if (timeIndex > 0 && timeIndex <= 11) {
-      return `${timeIndex.toString()} AM`;
-    } else if (timeIndex === 12) {
-      return '12 PM';
-    } else {
-      return `${(timeIndex - 12).toString()} PM`;
-    }
-  };
-
-  // Takes week index and returns string of weekday
-  getWeekdayString = weekIndex => {
-    const weekStrings = {
-      0: 'Sunday',
-      1: 'Monday',
-      2: 'Tuesday',
-      3: 'Wednesday',
-      4: 'Thursday',
-      5: 'Friday',
-      6: 'Saturday'
-    };
-    return weekStrings[weekIndex];
-  };
-
   // Sets start time to selected block's
   setCurrentTimeBlock = (id, weekdayIndex, startTime, endTime) => {
     // Reset select-option element to first option
@@ -379,7 +377,7 @@ class WeekEdit extends Component {
       ...this.state,
       showModal: true,
       currentID: id,
-      modalWeekday: this.getWeekdayString(weekdayIndex),
+      modalWeekday: getWeekdayString(weekdayIndex),
       modalStartTime: startTime,
       modalEndTime: endTime
     });
@@ -393,9 +391,22 @@ class WeekEdit extends Component {
     });
   };
 
-  toggleModalVisibility = event => {
+  hideModal = event => {
     event.preventDefault();
-    this.setState({ showModal: !this.state.showModal });
+    this.setState({ showModal: false });
+  };
+
+  showModal = event => {
+    event.preventDefault();
+    this.setState({ showModal: true });
+  };
+
+  showSidebar = () => {
+    this.setState({ ...this.state, showSidebar: true });
+  };
+
+  hideSidebar = () => {
+    this.setState({ ...this.state, showSidebar: false });
   };
 
   // Takes current state's schedule and updates using currently chosen time blocks
@@ -427,52 +438,58 @@ class WeekEdit extends Component {
     return (
       <div className={styles.container}>
         <header className={styles.header}>
-          <button className={styles.button} onClick={this.onScheduleSubmit}>
-            DONE
-          </button>
-          <div>SUN</div>
-          <div>MON</div>
-          <div>TUE</div>
-          <div>WED</div>
-          <div>THU</div>
-          <div>FRI</div>
-          <div>SAT</div>
+          <span>Set a new schedule for yourself</span>
+          <h1>{this.state.title ? this.state.title : undefined}</h1>
+          <div className={styles.labels}>
+            <Button title={'Menu'} onClickHandle={this.showSidebar} />
+            <div>SUN</div>
+            <div>MON</div>
+            <div>TUE</div>
+            <div>WED</div>
+            <div>THU</div>
+            <div>FRI</div>
+            <div>SAT</div>
+          </div>
         </header>
-
-        <div
-          className={
-            this.state.showModal
-              ? styles.showModalOverlay
-              : styles.hideModalOverlay
-          }
+        <Sidebar
+          isOpen={this.state.showSidebar}
+          hideSidebarHandle={this.hideSidebar}
         >
-          <form
-            id='endTimeForm'
-            className={styles.modal}
-            onSubmit={this.createTimeBlock}
+          <Button
+            title={'Submit schedule'}
+            onClickHandle={this.onScheduleSubmit}
+          />
+          <Link
+            to={`/groups/view/${this.props.match.params.slug}`}
+            className={styles.button}
           >
+            <Button title={'View group'} />
+          </Link>
+        </Sidebar>
+        <Modal isOpen={this.state.showModal} hideModalHandle={this.hideModal}>
+          <form id='endTimeForm' onSubmit={this.createTimeBlock}>
             <h1 className={styles.title}>Select Ending Time</h1>
-            <p>{this.state.modalWeekday}</p>
-            <p>
-              {this.getTimeString(this.state.modalStartTime)} <br /> to
-            </p>
-            <div className={styles.inputWrapper}>
-              <label htmlFor='endTime'>Ending Time</label>
-              <select id='endTime' onChange={this.onEndTimeSelect}>
-                {this.createEndingTimeOptions()}
-              </select>
-            </div>
-            <button type='submit'>Create Time Block</button>
-            <button
-              className={styles.grey}
-              onClick={this.toggleModalVisibility}
-            >
-              Cancel
-            </button>
+            <span>
+              {getTimeString(this.state.modalStartTime)} <br /> to
+            </span>
+            <Select
+              title={'Ending Time'}
+              name={'endTime'}
+              placeholder={'Select an ending time'}
+              options={this.createEndingTimeOptions()}
+              onChangeHandle={this.onEndTimeSelect}
+            />
+            <Button title={'Create Time Block'} />
+            <Button title={'Cancel'} onClickHandle={this.hideModal} />
           </form>
-        </div>
-
+        </Modal>
         <div className={styles.weekContainer}>{this.createWeekTable()}</div>
+        <ReactToolTip
+          className={styles.tooltip}
+          effect='solid'
+          place='top'
+          type='light'
+        />
       </div>
     );
   }
