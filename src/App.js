@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Join from './components/Join/Join';
-import Navbar from './components/Navbar/Navbar';
-import Register from './components/Register/Register';
-import Login from './components/Login/Login';
 import Account from './components/Account/Account';
 import Dashboard from './components/Dashboard/Dashboard';
+import Join from './components/Join/Join';
+import Login from './components/Login/Login';
+import Manage from './components/Manage/Manage';
+import Navbar from './components/Navbar/Navbar';
+import Register from './components/Register/Register';
 import WeekEdit from './components/WeekEdit/WeekEdit';
 import WeekView from './components/WeekView/WeekView';
 import { Switch, Route, withRouter } from 'react-router-dom';
@@ -85,6 +86,7 @@ class App extends Component {
                 <WeekEdit {...props} isLoggedIn={this.state.isLoggedIn} />
               )}
             />
+            <PrivateRoute path='/groups/manage/:slug' component={Manage} />
           </Switch>
         </main>
       </div>
