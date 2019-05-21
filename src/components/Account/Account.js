@@ -90,17 +90,17 @@ class Account extends Component {
   render() {
     return (
       <div className={styles.container}>
+        <h1 className={styles.title}>
+          <IconContext.Provider
+            value={{ color: 'black', className: 'global-class-name' }}
+          >
+            <FaUserEdit />
+          </IconContext.Provider>
+          Account
+        </h1>
         {this.getAlertList(this.state.alerts)}
         <form onSubmit={this.onPassChangeSubmit}>
-          <h1 className={styles.title}>
-            <IconContext.Provider
-              value={{ color: 'black', className: 'global-class-name' }}
-            >
-              <FaUserEdit />
-            </IconContext.Provider>
-            Account
-          </h1>
-          <h2 className={styles.subtitle}>Change Password</h2>
+          <h1 className={styles.subtitle}>Change Password</h1>
           <Input
             type={'password'}
             title={'Current Password'}
@@ -132,7 +132,7 @@ class Account extends Component {
           <Button title={'Change Password'} />
         </form>
         <form onSubmit={this.onDeleteAccSubmit}>
-          <h2 className={styles.subtitle}>Delete Account</h2>
+          <h1 className={styles.subtitle}>Delete Account</h1>
           <Input
             type={'password'}
             title={'Enter password to confirm'}
