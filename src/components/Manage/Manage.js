@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Alert from '../../shared-components/Alert/Alert';
 import Input from '../../shared-components/Input/Input';
 import Button from '../../shared-components/Button/Button';
 import Checkbox from '../../shared-components/Checkbox/Checkbox';
@@ -13,10 +14,12 @@ class Manage extends Component {
     this.state = {
       isEditing: false,
       title: null,
+      creator: null,
       location: null,
       description: null,
       members: [],
-      membersToRemove: []
+      membersToRemove: [],
+      alerts: []
     };
   }
 
@@ -32,10 +35,11 @@ class Manage extends Component {
       .then(response => {
         response.json().then(data => {
           if (response.status === 200) {
-            const { title, location, description, members } = data;
+            const { title, creator, location, description, members } = data;
             this.setState({
               ...this.state,
               title: title,
+              creator: creator,
               location: location,
               description: description,
               members: members
@@ -46,6 +50,18 @@ class Manage extends Component {
         });
       })
       .catch(error => console.log(error));
+  };
+
+  // Check for alerts and display Alert component for each
+  getAlertList = alerts => {
+    if (alerts.length <= 0 || !alerts[0]) {
+      return;
+    }
+    return alerts.map((alert, index) => {
+      return (
+        <Alert key={index} success={alert.success} message={alert.message} />
+      );
+    });
   };
 
   onCheckboxChange = event => {
@@ -66,10 +82,62 @@ class Manage extends Component {
 
   onEditSubmit = event => {
     event.preventDefault();
+    const { title, location, description } = this.state;
+    fetch(
+      `http://localhost:5000/api/groups/edit/${this.props.match.params.slug}`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          title: title,
+          location: location,
+          description: description
+        })
+      }
+    ).then(response => {
+      response
+        .json()
+        .then(data =>
+          this.setState({
+            ...this.state,
+            isEditing: false,
+            alerts: data.alerts
+          })
+        )
+        .catch(error => console.log(error));
+    });
   };
 
   onRemoveSubmit = event => {
     event.preventDefault();
+    const { membersToRemove } = this.state;
+    fetch(
+      `http://localhost:5000/api/groups/remove-members/${
+        this.props.match.params.slug
+      }`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          membersToRemove: membersToRemove
+        })
+      }
+    )
+      .then(response => {
+        response
+          .json()
+          .then(data =>
+            this.setState({
+              ...this.state,
+              members: data.members,
+              alerts: data.alerts
+            })
+          )
+          .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
   };
 
   // Input change handle for form fields
@@ -84,13 +152,20 @@ class Manage extends Component {
   };
 
   render() {
-    const { title, location, description, membersToRemove } = this.state;
+    const {
+      title,
+      creator,
+      location,
+      description,
+      members,
+      membersToRemove
+    } = this.state;
     const { isEditing } = this.state;
     let groupForm;
 
     if (isEditing) {
       groupForm = (
-        <form>
+        <form onSubmit={this.onEditSubmit}>
           <h1 className={styles.subtitle}>Edit Group Info</h1>
           <Input
             type={'text'}
@@ -140,14 +215,15 @@ class Manage extends Component {
           </IconContext.Provider>
           Manage Group
         </h1>
+        {this.getAlertList(this.state.alerts)}
         {groupForm}
 
-        <form onSubmit={this.handleCheckSubmit}>
+        <form onSubmit={this.onRemoveSubmit}>
           <h1 className={styles.subtitle}>Remove Members</h1>
           <Checkbox
             title={''}
             name={'members'}
-            options={this.state.members}
+            options={members.filter(member => member !== creator)}
             selectedOptions={membersToRemove}
             onChangeHandle={this.onCheckboxChange}
           />
