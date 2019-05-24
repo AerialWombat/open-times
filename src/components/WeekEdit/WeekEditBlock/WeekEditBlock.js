@@ -2,8 +2,6 @@ import React from 'react';
 
 import styles from './week-edit-block.module.scss';
 
-//NOTE: use block ID to to be able to edit/delete correct blocks
-
 const WeekEditBlock = ({
   blockID,
   weekdayIndex,
