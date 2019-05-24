@@ -3,6 +3,8 @@ import Button from '../../shared-components/Button/Button';
 import Sidebar from '../../shared-components/Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import WeekViewBlock from './WeekViewBlock/WeekViewBlock';
+import { FaBars } from 'react-icons/fa';
+import { IconContext } from 'react-icons';
 import ReactToolTip from 'react-tooltip';
 import { getTimeString, shiftByUTCOffset } from '../../utils.js';
 
@@ -282,7 +284,11 @@ class WeekView extends Component {
           <span>View your group's open times</span>
           <h1>{title}</h1>
           <div className={styles.labels}>
-            <Button title={'Menu'} onClickHandle={this.showSidebar} />
+            <Button title={''} onClickHandle={this.showSidebar}>
+              <IconContext.Provider value={{ size: '1.5em' }}>
+                <FaBars />
+              </IconContext.Provider>
+            </Button>
             <div>SUN</div>
             <div>MON</div>
             <div>TUE</div>

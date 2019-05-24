@@ -5,6 +5,8 @@ import Sidebar from '../../shared-components/Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import Modal from '../../shared-components/Modal/Modal';
 import WeekEditBlock from './WeekEditBlock/WeekEditBlock.js';
+import { FaBars } from 'react-icons/fa';
+import { IconContext } from 'react-icons';
 import ReactToolTip from 'react-tooltip';
 import {
   getTimeString,
@@ -441,7 +443,11 @@ class WeekEdit extends Component {
           <span>Set a new schedule for yourself</span>
           <h1>{this.state.title ? this.state.title : undefined}</h1>
           <div className={styles.labels}>
-            <Button title={'Menu'} onClickHandle={this.showSidebar} />
+            <Button title={''} onClickHandle={this.showSidebar}>
+              <IconContext.Provider value={{ size: '1.5em' }}>
+                <FaBars />
+              </IconContext.Provider>
+            </Button>
             <div>SUN</div>
             <div>MON</div>
             <div>TUE</div>
