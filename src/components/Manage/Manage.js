@@ -80,6 +80,30 @@ class Manage extends Component {
     this.setState({ ...this.state, membersToRemove: newMembersToRemove });
   };
 
+  onDeleteSubmit = event => {
+    event.preventDefault();
+    fetch(`http://localhost:5000/api/groups/${this.props.match.params.slug}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    })
+      .then(response =>
+        response
+          .json()
+          .then(data => {
+            if (response.status === 200) {
+              this.props.history.push({
+                pathname: '/groups',
+                state: { success: true, message: 'Group successfully deleted.' }
+              });
+            } else {
+              this.setState({ alerts: data.alerts });
+            }
+          })
+          .catch(error => console.log(error))
+      )
+      .catch(error => console.log(error));
+  };
+
   onEditSubmit = event => {
     event.preventDefault();
     const { title, location, description } = this.state;
@@ -229,6 +253,11 @@ class Manage extends Component {
             onChangeHandle={this.onCheckboxChange}
           />
           <Button title={'Remove'} />
+        </form>
+
+        <form onSubmit={this.onDeleteSubmit}>
+          <h1 className={styles.subtitle}>Delete Group</h1>
+          <Button title={'Delete'} />
         </form>
       </div>
     );
