@@ -153,14 +153,15 @@ class Manage extends Component {
 
   render() {
     const {
+      alerts,
       title,
       creator,
       location,
       description,
+      isEditing,
       members,
       membersToRemove
     } = this.state;
-    const { isEditing } = this.state;
     let groupForm;
 
     if (isEditing) {
@@ -215,7 +216,7 @@ class Manage extends Component {
           </IconContext.Provider>
           Manage Group
         </h1>
-        {this.getAlertList(this.state.alerts)}
+        {this.getAlertList(alerts)}
         {groupForm}
 
         <form onSubmit={this.onRemoveSubmit}>

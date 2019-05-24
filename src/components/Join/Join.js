@@ -123,7 +123,7 @@ class Join extends Component {
   };
 
   render() {
-    const { loading, isLoggedIn } = this.state;
+    const { alerts, loading, isLoggedIn, title } = this.state;
     if (loading) {
       return null;
     } else if (isLoggedIn) {
@@ -132,8 +132,8 @@ class Join extends Component {
       return (
         <div className={styles.container}>
           <div className={styles.subtitle}>You are joining</div>
-          <h1>{this.state.title}</h1>
-          {this.getAlertList(this.state.alerts)}
+          <h1>{title}</h1>
+          {this.getAlertList(alerts)}
           <div>
             <form onSubmit={this.onLoginSubmit}>
               <h2>Log In</h2>

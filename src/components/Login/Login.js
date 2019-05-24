@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Alert from '../../shared-components/Alert/Alert';
 import Input from '../../shared-components/Input/Input';
 import Button from '../../shared-components/Button/Button';
+import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { FaSignInAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 import styles from './login.module.scss';
 
@@ -79,6 +79,8 @@ class Login extends Component {
 
   // Displays list of Alert components if alerts exist in state
   render() {
+    const { alerts } = this.state;
+
     return (
       <div className={styles.container}>
         <form onSubmit={this.onLoginSubmit}>
@@ -90,7 +92,7 @@ class Login extends Component {
             </IconContext.Provider>
             Login
           </h1>
-          {this.getAlertList(this.state.alerts)}
+          {this.getAlertList(alerts)}
           <Input
             type={'email'}
             title={'Email'}

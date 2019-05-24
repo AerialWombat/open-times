@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import WeekViewBlock from './WeekViewBlock/WeekViewBlock';
 import Button from '../../shared-components/Button/Button';
 import Sidebar from '../../shared-components/Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
-import WeekViewBlock from './WeekViewBlock/WeekViewBlock';
 import { FaBars } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import ReactToolTip from 'react-tooltip';
@@ -277,7 +277,7 @@ class WeekView extends Component {
   };
 
   render() {
-    const { title, location, description, members } = this.state;
+    const { title, location, description, members, showSidebar } = this.state;
     return (
       <div className={styles.container}>
         <header className={styles.header}>
@@ -298,10 +298,7 @@ class WeekView extends Component {
             <div>SAT</div>
           </div>
         </header>
-        <Sidebar
-          isOpen={this.state.showSidebar}
-          hideSidebarHandle={this.hideSidebar}
-        >
+        <Sidebar isOpen={showSidebar} hideSidebarHandle={this.hideSidebar}>
           <Link
             to={`/groups/edit/${this.props.match.params.slug}`}
             className={styles.button}

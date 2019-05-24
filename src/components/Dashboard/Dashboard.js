@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Alert from '../../shared-components/Alert/Alert';
-import Input from '../../shared-components/Input/Input';
-import Button from '../../shared-components/Button/Button';
-import Modal from '../../shared-components/Modal/Modal';
 import GroupCard from './GroupCard/GroupCard';
+import Alert from '../../shared-components/Alert/Alert';
+import Button from '../../shared-components/Button/Button';
+import Input from '../../shared-components/Input/Input';
+import Modal from '../../shared-components/Modal/Modal';
 import { FaPlusCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 
@@ -110,12 +110,14 @@ class Dashboard extends Component {
   };
 
   render() {
+    const { showModal, alerts, groups } = this.state;
+
     return (
       <div className={styles.container}>
-        <Modal isOpen={this.state.showModal} hideModalHandle={this.hideModal}>
+        <Modal isOpen={showModal} hideModalHandle={this.hideModal}>
           <form onSubmit={this.onCreateSubmit}>
             <h1>Create Group</h1>
-            {this.getAlertList(this.state.alerts)}
+            {this.getAlertList(alerts)}
             <Input
               type={'text'}
               title={'Name'}
@@ -156,8 +158,7 @@ class Dashboard extends Component {
         </header>
 
         <div className={styles.cardsContainer}>
-          {' '}
-          {this.getGroupCards(this.state.groups)}
+          {this.getGroupCards(groups)}
         </div>
       </div>
     );

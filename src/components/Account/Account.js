@@ -88,6 +88,7 @@ class Account extends Component {
 
   // Displays list of Alert components if alerts exist in state
   render() {
+    const { alerts } = this.state;
     return (
       <div className={styles.container}>
         <h1 className={styles.title}>
@@ -98,7 +99,7 @@ class Account extends Component {
           </IconContext.Provider>
           Account
         </h1>
-        {this.getAlertList(this.state.alerts)}
+        {this.getAlertList(alerts)}
         <form onSubmit={this.onPassChangeSubmit}>
           <h1 className={styles.subtitle}>Change Password</h1>
           <Input

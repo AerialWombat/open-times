@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import WeekEditBlock from './WeekEditBlock/WeekEditBlock.js';
 import Button from '../../shared-components/Button/Button';
+import Modal from '../../shared-components/Modal/Modal';
 import Select from '../../shared-components/Select/Select';
 import Sidebar from '../../shared-components/Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
-import Modal from '../../shared-components/Modal/Modal';
-import WeekEditBlock from './WeekEditBlock/WeekEditBlock.js';
 import { FaBars } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import ReactToolTip from 'react-tooltip';
@@ -437,11 +437,13 @@ class WeekEdit extends Component {
   };
 
   render() {
+    const { title, modalStartTime, showModal, showSidebar } = this.state;
+
     return (
       <div className={styles.container}>
         <header className={styles.header}>
           <span>Set a new schedule for yourself</span>
-          <h1>{this.state.title ? this.state.title : undefined}</h1>
+          <h1>{title ? title : undefined}</h1>
           <div className={styles.labels}>
             <Button title={''} onClickHandle={this.showSidebar}>
               <IconContext.Provider value={{ size: '1.5em' }}>
@@ -457,10 +459,7 @@ class WeekEdit extends Component {
             <div>SAT</div>
           </div>
         </header>
-        <Sidebar
-          isOpen={this.state.showSidebar}
-          hideSidebarHandle={this.hideSidebar}
-        >
+        <Sidebar isOpen={showSidebar} hideSidebarHandle={this.hideSidebar}>
           <Button
             title={'Submit schedule'}
             onClickHandle={this.onScheduleSubmit}
@@ -472,11 +471,11 @@ class WeekEdit extends Component {
             <Button title={'View group'} />
           </Link>
         </Sidebar>
-        <Modal isOpen={this.state.showModal} hideModalHandle={this.hideModal}>
+        <Modal isOpen={showModal} hideModalHandle={this.hideModal}>
           <form id='endTimeForm' onSubmit={this.createTimeBlock}>
             <h1 className={styles.title}>Select Ending Time</h1>
             <span>
-              {getTimeString(this.state.modalStartTime)} <br /> to
+              {getTimeString(modalStartTime)} <br /> to
             </span>
             <Select
               title={'Ending Time'}

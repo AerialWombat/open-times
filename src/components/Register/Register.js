@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Alert from '../../shared-components/Alert/Alert';
 import Input from '../../shared-components/Input/Input';
 import Button from '../../shared-components/Button/Button';
+import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { FaUserPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 
 import styles from './register.module.scss';
 
@@ -77,8 +77,9 @@ class Register extends Component {
     });
   };
 
-  // Displays list of Alert components if alerts exist in state
   render() {
+    const { alerts } = this.state;
+
     return (
       <div className={styles.container}>
         <form onSubmit={this.onRegisterSubmit}>
@@ -90,7 +91,7 @@ class Register extends Component {
             </IconContext.Provider>
             Register
           </h1>
-          {this.getAlertList(this.state.alerts)}
+          {this.getAlertList(alerts)}
           <Input
             type={'email'}
             title={'Email'}

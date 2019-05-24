@@ -19,7 +19,7 @@ class GroupCard extends Component {
 
   render() {
     const group = this.props.group;
-    console.log('GROUPCARD TEST', group);
+    const { showMembers } = this.state;
 
     // Check for non-null group data
     if (group) {
@@ -41,9 +41,7 @@ class GroupCard extends Component {
             </button>
             <ul
               className={
-                this.state.showMembers
-                  ? styles.showMemberList
-                  : styles.hideMemberList
+                showMembers ? styles.showMemberList : styles.hideMemberList
               }
             >
               {group.members.map((member, index) => {
