@@ -8,7 +8,8 @@ class GroupCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMembers: false
+      showMembers: false,
+      showManage: false
     };
   }
 
@@ -18,6 +19,7 @@ class GroupCard extends Component {
 
   render() {
     const group = this.props.group;
+    console.log('GROUPCARD TEST', group);
 
     // Check for non-null group data
     if (group) {
@@ -53,9 +55,11 @@ class GroupCard extends Component {
             <Link to={`/groups/view/${group.slug}`}>
               <Button title={'View'} />
             </Link>
-            <Link to={`/groups/manage/${group.slug}`}>
-              <Button title={'Manage'} />
-            </Link>
+            {group.isOwner ? (
+              <Link to={`/groups/manage/${group.slug}`}>
+                <Button title={'Manage'} />
+              </Link>
+            ) : null}
           </div>
         </div>
       );
