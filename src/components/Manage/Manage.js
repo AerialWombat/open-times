@@ -26,7 +26,9 @@ class Manage extends Component {
   // GET group title, description, and members
   componentDidMount = () => {
     fetch(
-      `http://localhost:5000/api/groups/info/${this.props.match.params.slug}`,
+      `${process.env.REACT_APP_API_URL}api/groups/info/${
+        this.props.match.params.slug
+      }`,
       {
         method: 'GET',
         credentials: 'include'
@@ -82,10 +84,15 @@ class Manage extends Component {
 
   onDeleteSubmit = event => {
     event.preventDefault();
-    fetch(`http://localhost:5000/api/groups/${this.props.match.params.slug}`, {
-      method: 'DELETE',
-      credentials: 'include'
-    })
+    fetch(
+      `${process.env.REACT_APP_API_URL}api/groups/${
+        this.props.match.params.slug
+      }`,
+      {
+        method: 'DELETE',
+        credentials: 'include'
+      }
+    )
       .then(response =>
         response
           .json()
@@ -108,7 +115,9 @@ class Manage extends Component {
     event.preventDefault();
     const { title, location, description } = this.state;
     fetch(
-      `http://localhost:5000/api/groups/edit/${this.props.match.params.slug}`,
+      `${process.env.REACT_APP_API_URL}api/groups/edit/${
+        this.props.match.params.slug
+      }`,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -137,7 +146,7 @@ class Manage extends Component {
     event.preventDefault();
     const { membersToRemove } = this.state;
     fetch(
-      `http://localhost:5000/api/groups/remove-members/${
+      `${process.env.REACT_APP_API_URL}api/groups/remove-members/${
         this.props.match.params.slug
       }`,
       {

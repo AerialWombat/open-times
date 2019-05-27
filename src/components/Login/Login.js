@@ -35,7 +35,7 @@ class Login extends Component {
   onLoginSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
-    fetch('http://localhost:5000/api/users/login', {
+    fetch(`${process.env.REACT_APP_API_URL}api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

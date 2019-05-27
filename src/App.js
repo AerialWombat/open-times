@@ -23,7 +23,7 @@ class App extends Component {
 
   // Check if user is already logged in and update state
   componentDidMount = () => {
-    fetch('http://localhost:5000/api/checkAuth', {
+    fetch(`${process.env.REACT_APP_API_URL}api/checkAuth`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -42,7 +42,7 @@ class App extends Component {
     } else if (choice.toLowerCase() === 'out') {
       // If logging out, calls API's logout route, sets loggedIn to false, and redirects
       this.setState({ isLoggedIn: false });
-      fetch('http://localhost:5000/api/users/logout', {
+      fetch(`${process.env.REACT_APP_API_URL}api/users/logout`, {
         method: 'GET',
         credentials: 'include'
       });

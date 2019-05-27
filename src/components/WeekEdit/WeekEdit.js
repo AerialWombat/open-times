@@ -211,7 +211,9 @@ class WeekEdit extends Component {
     }
 
     fetch(
-      `http://localhost:5000/api/groups/info/${this.props.match.params.slug}`,
+      `${process.env.REACT_APP_API_URL}api/groups/info/${
+        this.props.match.params.slug
+      }`,
       {
         method: 'GET',
         credentials: 'include'
@@ -254,7 +256,7 @@ class WeekEdit extends Component {
     });
 
     // POST request to API's schedule setting route
-    fetch('http://localhost:5000/api/groups/set-schedule', {
+    fetch(`${process.env.REACT_APP_API_URL}api/groups/set-schedule`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

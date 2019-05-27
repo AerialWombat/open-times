@@ -23,7 +23,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:5000/api/groups/dashboard', {
+    fetch(`${process.env.REACT_APP_API_URL}api/groups/dashboard`, {
       method: 'GET',
       credentials: 'include'
     }).then(response =>
@@ -68,7 +68,7 @@ class Dashboard extends Component {
   onCreateSubmit = event => {
     event.preventDefault();
     const { name, location, description } = this.state;
-    fetch('http://localhost:5000/api/groups/create', {
+    fetch(`${process.env.REACT_APP_API_URL}api/groups/create`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

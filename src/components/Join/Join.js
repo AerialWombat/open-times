@@ -22,7 +22,7 @@ class Join extends Component {
 
   // Checks if user is already logged in, if not, GETs group info for render
   componentDidMount = () => {
-    fetch('http://localhost:5000/api/checkAuth', {
+    fetch(`${process.env.REACT_APP_API_URL}api/checkAuth`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -35,7 +35,7 @@ class Join extends Component {
       })
       .then(
         fetch(
-          `http://localhost:5000/api/groups/info/${
+          `${process.env.REACT_APP_API_URL}api/groups/info/${
             this.props.match.params.slug
           }`,
           {
@@ -77,7 +77,7 @@ class Join extends Component {
   onLoginSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
-    fetch('http://localhost:5000/api/users/login', {
+    fetch(`${process.env.REACT_APP_API_URL}api/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

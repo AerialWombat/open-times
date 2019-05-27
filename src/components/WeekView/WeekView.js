@@ -203,7 +203,9 @@ class WeekView extends Component {
   componentDidMount = () => {
     //GET all members schedules, combine them into single array to store in state, convert to local time using UTC offset
     fetch(
-      `http://localhost:5000/api/groups/view/${this.props.match.params.slug}`,
+      `${process.env.REACT_APP_API_URL}api/groups/view/${
+        this.props.match.params.slug
+      }`,
       {
         method: 'GET',
         credentials: 'include'

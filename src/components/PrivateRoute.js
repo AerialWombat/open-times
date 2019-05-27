@@ -11,7 +11,7 @@ class PrivateRoute extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:5000/api/checkAuth', {
+    fetch(`${process.env.REACT_APP_API_URL}api/checkAuth`, {
       method: 'GET',
       credentials: 'include'
     })

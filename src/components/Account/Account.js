@@ -41,7 +41,7 @@ class Account extends Component {
   onPassChangeSubmit = event => {
     event.preventDefault();
     const { currentPassword, newPassword, newPasswordConfirm } = this.state;
-    fetch('http://localhost:5000/api/users/change-password', {
+    fetch(`${process.env.REACT_APP_API_URL}api/users/change-password`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -61,7 +61,7 @@ class Account extends Component {
   onDeleteAccSubmit = event => {
     event.preventDefault();
     const { deletePassword } = this.state;
-    fetch('http://localhost:5000/api/users/delete-account', {
+    fetch(`${process.env.REACT_APP_API_URL}api/users/delete-account`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
