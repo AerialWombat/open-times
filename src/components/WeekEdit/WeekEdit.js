@@ -482,7 +482,7 @@ class WeekEdit extends Component {
         <Modal isOpen={showModal} hideModalHandle={this.hideModal}>
           <form id='endTimeForm' onSubmit={this.createTimeBlock}>
             <h1 className={styles.title}>Select Ending Time</h1>
-            <span>{modalWeekDay}</span>
+            <span>{modalWeekday}</span>
             <span>
               {getTimeString(modalStartTime)} <br /> to
             </span>
