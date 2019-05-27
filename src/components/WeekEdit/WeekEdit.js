@@ -442,7 +442,7 @@ class WeekEdit extends Component {
     const {
       title,
       modalStartTime,
-      modalWeekDay,
+      modalWeekday,
       showModal,
       showSidebar
     } = this.state;
