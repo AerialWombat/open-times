@@ -9,8 +9,8 @@ class Modal extends Component {
     }
   };
 
-  onOverlayClick = () => {
-    this.props.hideModalHandle();
+  onOverlayClick = event => {
+    this.props.hideModalHandle(event);
   };
 
   render() {
