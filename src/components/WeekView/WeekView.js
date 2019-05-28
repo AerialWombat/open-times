@@ -197,7 +197,9 @@ class WeekView extends Component {
   copyInviteLink = event => {
     event.preventDefault();
     navigator.clipboard.writeText(
-      `http://localhost:3000/groups/join/${this.props.match.params.slug}`
+      `${process.env.REACT_APP_HOST_URL}groups/join/${
+        this.props.match.params.slug
+      }`
     );
     this.setState({ ...this.state, isInviteCopied: true });
   };
