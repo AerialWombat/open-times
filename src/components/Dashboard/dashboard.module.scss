@@ -2,7 +2,9 @@
 
 .container {
   position: relative;
+  margin: 0 auto;
   height: 100%;
+  max-width: 850px;
 
   header {
     height: 10%;
