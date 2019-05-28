@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import WeekViewBlock from './WeekViewBlock/WeekViewBlock';
 import Button from '../../shared-components/Button/Button';
+import Input from '../../shared-components/Input/Input';
 import Sidebar from '../../shared-components/Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
@@ -188,9 +189,18 @@ class WeekView extends Component {
         { amountAvailable: 0, membersAvailable: [] },
         { amountAvailable: 0, membersAvailable: [] }
       ],
-      showSidebar: false
+      showSidebar: false,
+      isInviteCopied: false
     };
   }
+
+  copyInviteLink = event => {
+    event.preventDefault();
+    navigator.clipboard.writeText(
+      `http://localhost:3000/groups/join/${this.props.match.params.slug}`
+    );
+    this.setState({ ...this.state, isInviteCopied: true });
+  };
 
   showSidebar = () => {
     this.setState({ ...this.state, showSidebar: true });
@@ -279,7 +289,14 @@ class WeekView extends Component {
   };
 
   render() {
-    const { title, location, description, members, showSidebar } = this.state;
+    const {
+      title,
+      location,
+      description,
+      members,
+      showSidebar,
+      isInviteCopied
+    } = this.state;
     return (
       <div className={styles.container}>
         <header className={styles.header}>
@@ -317,6 +334,19 @@ class WeekView extends Component {
               return <li>{member}</li>;
             })}
           </ul>
+          <Input
+            type={'text'}
+            title={'Invite Link'}
+            name={'inviteLink'}
+            value={`http://localhost:3000/groups/join/${
+              this.props.match.params.slug
+            }`}
+            readOnly={true}
+          />
+          <Button
+            title={isInviteCopied ? 'Copied!' : 'Copy Invite Link'}
+            onClickHandle={this.copyInviteLink}
+          />
         </Sidebar>
         <div className={styles.weekContainer}>{this.createWeekTable()}</div>
         <ReactToolTip
