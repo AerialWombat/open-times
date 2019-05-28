@@ -13,6 +13,7 @@ const Input = props => {
         value={props.value}
         placeholder={props.placeholder}
         required={props.required}
+        readonly={props.readOnly}
         onChange={props.onChangeHandle}
       />
       <span />
