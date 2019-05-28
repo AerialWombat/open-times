@@ -338,7 +338,7 @@ class WeekView extends Component {
             type={'text'}
             title={'Invite Link'}
             name={'inviteLink'}
-            value={`http://localhost:3000/groups/join/${
+            value={`${process.env.REACT_APP_HOST_URL}groups/join/${
               this.props.match.params.slug
             }`}
             readOnly={true}
