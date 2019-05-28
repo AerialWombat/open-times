@@ -8,7 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import Register from './components/Register/Register';
 import WeekEdit from './components/WeekEdit/WeekEdit';
 import WeekView from './components/WeekView/WeekView';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Redirect, Route, withRouter } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 
 import './App.scss';
@@ -51,15 +51,23 @@ class App extends Component {
   };
 
   render() {
+    const { isLoggedIn } = this.state;
     return (
       <div className='App'>
-        <Navbar
-          isLoggedIn={this.state.isLoggedIn}
-          updateLoggedIn={this.updateLoggedIn}
-        />
+        <Navbar isLoggedIn={isLoggedIn} updateLoggedIn={this.updateLoggedIn} />
         <main>
           <Switch>
-            <Route exact path='/' />
+            <Route
+              exact
+              path='/'
+              render={() =>
+                isLoggedIn ? (
+                  <Redirect to='/groups' />
+                ) : (
+                  <Redirect to='/users/login' />
+                )
+              }
+            />
             <Route path='/users/register' component={Register} />
             <Route
               path='/users/login'
@@ -82,9 +90,7 @@ class App extends Component {
             <Route path='/groups/view/:slug' component={WeekView} />
             <Route
               path='/groups/edit/:slug'
-              render={props => (
-                <WeekEdit {...props} isLoggedIn={this.state.isLoggedIn} />
-              )}
+              render={props => <WeekEdit {...props} isLoggedIn={isLoggedIn} />}
             />
             <PrivateRoute path='/groups/manage/:slug' component={Manage} />
           </Switch>
