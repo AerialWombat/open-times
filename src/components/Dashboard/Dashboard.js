@@ -56,13 +56,23 @@ class Dashboard extends Component {
 
   // Checks for group data and then renders cards
   getGroupCards = groups => {
+    let groupCards = [];
     if (groups.length > 0) {
-      return this.state.groups.map((group, index) => {
+      groupCards = this.state.groups.map((group, index) => {
         return <GroupCard key={index} group={group} />;
       });
-    } else {
-      return;
     }
+    groupCards.push(
+      <button
+        className={styles.newGroupCard}
+        key={groups.length + 1}
+        onClick={this.showModal}
+      >
+        <h1>Create new group...</h1>
+      </button>
+    );
+
+    return groupCards;
   };
 
   onCreateSubmit = event => {

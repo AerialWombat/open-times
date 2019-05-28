@@ -31,6 +31,25 @@
   .cardsContainer {
     height: 90%;
     overflow-y: auto;
+
+    .newGroupCard {
+      margin: 1rem;
+      border: none;
+      padding: 1rem 0;
+      width: calc(100% - 2rem);
+      background-color: #599900;
+      box-shadow: #aaa 0px 0px 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+
+      &:hover {
+        background-color: #477b00;
+      }
+    }
   }
 
   form {
