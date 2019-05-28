@@ -47,6 +47,19 @@
     margin-left: 1rem;
   }
 
+  a {
+    margin-bottom: 1rem;
+    width: 85%;
+    font-size: 0.85rem;
+
+    & > button {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  input,
+  span,
   button {
     margin-bottom: 1rem;
     width: 85%;
