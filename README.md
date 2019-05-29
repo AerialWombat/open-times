@@ -1,6 +1,6 @@
 # Open Times
 
-A front-end for mobile-friendly, web application built using ReactJS. This was built to find common free times in a typical week for a group of individuals.
+A front-end for a mobile-friendly, web application built using ReactJS. This was built to find common free times in a typical week for a group of individuals.
 
 ## How To Use
 - The application allows you to register and log in to a user account to save and manage groups you are a part of.
