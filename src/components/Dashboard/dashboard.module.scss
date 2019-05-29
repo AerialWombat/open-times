@@ -7,8 +7,8 @@
   max-width: 850px;
 
   header {
-    height: 10%;
-    padding: 2rem 1rem;
+    height: 15%;
+    padding: 1.5rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,7 +31,7 @@
   }
 
   .cardsContainer {
-    height: 90%;
+    height: 85%;
     overflow-y: auto;
 
     .newGroupCard {
