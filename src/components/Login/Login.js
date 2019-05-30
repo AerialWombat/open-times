@@ -65,6 +65,39 @@ class Login extends Component {
     });
   };
 
+  // Submit handle that sends POST request to API's login route with demo login credentials
+  onDemoLoginSubmit = event => {
+    event.preventDefault();
+    fetch(`${process.env.REACT_APP_API_URL}api/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        email: 'demo@gmail.com',
+        password: 'Password1'
+      })
+    }).then(response => {
+      // Check for success response
+      if (response.status === 200) {
+        // Update loggedIn state to be true
+        this.props.updateLoggedIn('in');
+        // Redirect to any route with success message
+        this.props.history.push({
+          pathname: '/groups',
+          state: { success: true, message: 'Login successful!' }
+        });
+      } else {
+        // Append alerts from unsuccessful response
+        response
+          .json()
+          .then(data => {
+            this.setState({ ...this.state, alerts: data.alerts });
+          })
+          .catch(error => console.log(error));
+      }
+    });
+  };
+
   // Check for alerts and display Alert component for each
   getAlertList = alerts => {
     if (alerts.length <= 0 || !alerts[0]) {
@@ -110,6 +143,7 @@ class Login extends Component {
             onChangeHandle={this.onInputChange}
           />
           <Button title={'Login'} />
+          <Button title={'Demo Login'} onClickHandle={this.onDemoLoginSubmit} />
           <p className={styles.navigation}>
             Need an account? <Link to='/users/register'>Sign Up</Link>
           </p>
