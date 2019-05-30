@@ -32,7 +32,10 @@
 
     button {
       width: 100%;
-      margin-bottom: 0.5rem;
+
+      &:first-of-type {
+        margin-bottom: 1rem;
+      }
     }
   }
 
